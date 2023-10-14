@@ -1,0 +1,32 @@
+{
+    "image": "ghcr.io/rocker-org/devcontainer/r-ver:4",
+    "features": {
+        "ghcr.io/devcontainers/features/rust:1": {
+            "version": "latest"
+        },
+        "ghcr.io/eitsupi/devcontainer-features/go-task:1": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "EditorConfig.EditorConfig"
+            ]
+        }
+    },
+    "mounts": [
+        {
+            "source": "devcontainer-pak-cache",
+            "target": "/home/rstudio/.cache/R/pkgcache/pkg",
+            "type": "volume"
+        },
+        {
+            "source": "devcontainer-cargo-cache-${devcontainerId}",
+            "target": "/usr/local/cargo",
+            "type": "volume"
+        }
+    ],
+    "remoteEnv": {
+        "PKG_SYSREQS": "false"
+    }
+    // "updateContentCommand": "task setup-dev"
+}

@@ -1,0 +1,29 @@
+[package]
+name = 'r-glaredb'
+version = '0.1.0'
+edition = '2021'
+publish = false
+
+[lib]
+crate-type = ['staticlib']
+name = 'r_glaredb'
+
+[dependencies]
+extendr-api = '0.6.0'
+tokio = { version = "1", features = ["full"] }
+datafusion = { version = "31.0" }
+thiserror = "1.0"
+url = "2.4.0"
+sqlexec = { git = "https://github.com/GlareDB/glaredb", rev = "e5382923e7c1a48da44426c722bea1bc87cffa42" }
+metastore = { git = "https://github.com/GlareDB/glaredb", rev = "e5382923e7c1a48da44426c722bea1bc87cffa42" }
+telemetry = { git = "https://github.com/GlareDB/glaredb", rev = "e5382923e7c1a48da44426c722bea1bc87cffa42" }
+pgsrv = { git = "https://github.com/GlareDB/glaredb", rev = "e5382923e7c1a48da44426c722bea1bc87cffa42" }
+pgrepr = { git = "https://github.com/GlareDB/glaredb", rev = "e5382923e7c1a48da44426c722bea1bc87cffa42" }
+datafusion_ext = { git = "https://github.com/GlareDB/glaredb", rev = "e5382923e7c1a48da44426c722bea1bc87cffa42" }
+arrow_util = { git = "https://github.com/GlareDB/glaredb", rev = "e5382923e7c1a48da44426c722bea1bc87cffa42" }
+glaredb = { git = "https://github.com/GlareDB/glaredb", rev = "e5382923e7c1a48da44426c722bea1bc87cffa42" }
+futures = "0.3.28"
+uuid = "1.4.1"
+async-trait = "0.1.72"
+anyhow = "1.0.72"
+once_cell = "1.18.0"

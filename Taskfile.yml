@@ -1,0 +1,33 @@
+version: "3"
+
+env:
+  NOT_CRAN: "true"
+
+vars:
+  MANIFEST: src/rust/Cargo.toml
+  CARGO_LOCK: src/rust/Cargo.lock
+  R_SOURCE: R/*
+  VIGNETTES: vignettes/**/*.Rmd
+  RUST_SOURCE: src/rust/src/**/*.rs
+
+tasks:
+  build-extendr-wrappers:
+    internal: true
+    desc: Build the extendr wrappers.
+    sources:
+      - src/Makevars*
+      - configure*
+      - "{{.MANIFEST}}"
+      - "{{.CARGO_LOCK}}"
+      - "{{.RUST_SOURCE}}"
+    generates:
+      - R/extendr-wrappers.R
+    status:
+      - Rscript -e 'if (desc::desc_get("Config/rextendr/version") < packageVersion("rextendr")) quit(status = 1)'
+    cmds:
+      - Rscript -e 'rextendr::document()'
+
+  build-all:
+    desc: Build the R package, generate documents, run all tests, and update files.
+    cmds:
+      - task: build-extendr-wrappers
