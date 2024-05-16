@@ -1,0 +1,29 @@
+---
+output:
+  github_document:
+    html_preview: false
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r}
+#| include: false
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# R bindings for GlareDB
+
+Check out the [GlareDB repo](https://github.com/GlareDB/glaredb) to learn more.
+
+```{r}
+library(glaredb)
+
+glaredb_sql("SELECT 'hello from R' as hello") |>
+  as.data.frame()
+```

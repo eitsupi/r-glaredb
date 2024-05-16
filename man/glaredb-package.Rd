@@ -4,12 +4,17 @@
 \name{glaredb-package}
 \alias{glaredb}
 \alias{glaredb-package}
-\title{glaredb: What the Package Does (One Line, Title Case)}
+\title{glaredb: R Bindings for 'GlareDB'}
 \description{
-What the package does (one paragraph).
+TODO
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Tatsuya Shima \email{ts1s1andn@gmail.com}
+
+Authors:
+\itemize{
+  \item Authors of the dependency Rust crates (see inst/AUTHORS file for details)
+}
 
 }
 \keyword{internal}
