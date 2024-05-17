@@ -14,7 +14,7 @@ impl EnvironmentReader for REnvironmentReader {
         name: &str,
     ) -> Result<Option<Arc<dyn TableProvider>>, Box<dyn std::error::Error + Send + Sync>> {
         let classes = savvy::StringSexp(
-            savvy::eval_parse_text(format!(r#"base::get0("{name}") |> class()"#))
+            savvy::eval_parse_text(format!(r#"base::get0(r"({name})") |> class()"#))
                 .unwrap()
                 .inner(),
         )
@@ -22,7 +22,7 @@ impl EnvironmentReader for REnvironmentReader {
 
         if classes.iter().any(|&s| s == "RGlareDbExecutionOutput") {
             let sexp = savvy::Sexp(
-                savvy::eval_parse_text(format!(r#"base::get0("{name}")$.ptr"#))
+                savvy::eval_parse_text(format!(r#"base::get0(r"({name})")$.ptr"#))
                     .unwrap()
                     .inner(),
             );
