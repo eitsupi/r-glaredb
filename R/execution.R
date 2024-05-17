@@ -13,3 +13,10 @@ as_nanoarrow_array_stream.RGlareDbExecutionOutput <- function(x, ..., schema = N
 
   stream
 }
+
+
+#' @export
+as.data.frame.RGlareDbExecutionOutput <- function(x, ...) {
+  as_nanoarrow_array_stream(x) |>
+    as.data.frame()
+}

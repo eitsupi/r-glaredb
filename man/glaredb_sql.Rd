@@ -10,7 +10,7 @@ glaredb_sql(query)
 \item{query}{A character of the SQL query to run}
 }
 \value{
-\link{nanoarrow_array_stream}
+GlareDB execusion output
 }
 \description{
 Run a SQL query against the default in-memory GlareDB database
