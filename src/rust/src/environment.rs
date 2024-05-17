@@ -26,7 +26,7 @@ impl EnvironmentReader for REnvironmentReader {
                     .unwrap()
                     .inner(),
             );
-            let exec = RGlareDbExecutionOutput::try_from(sexp).unwrap();
+            let exec = <&RGlareDbExecutionOutput>::try_from(sexp).unwrap().clone();
 
             return Ok(Some(Arc::new(exec) as Arc<dyn TableProvider>));
         }
