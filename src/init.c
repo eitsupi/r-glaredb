@@ -39,8 +39,8 @@ SEXP savvy_sql__impl(SEXP query) {
     return handle_result(res);
 }
 
-SEXP savvy_connect__impl(SEXP cloud_addr) {
-    SEXP res = savvy_connect__ffi(cloud_addr);
+SEXP savvy_connect__impl(SEXP cloud_addr, SEXP disable_tls, SEXP data_dir_or_cloud_url, SEXP spill_path, SEXP location) {
+    SEXP res = savvy_connect__ffi(cloud_addr, disable_tls, data_dir_or_cloud_url, spill_path, location);
     return handle_result(res);
 }
 
@@ -58,7 +58,7 @@ SEXP savvy_RGlareDbExecutionOutput_export_stream__impl(SEXP self__, SEXP stream_
 
 static const R_CallMethodDef CallEntries[] = {
     {"savvy_sql__impl", (DL_FUNC) &savvy_sql__impl, 1},
-    {"savvy_connect__impl", (DL_FUNC) &savvy_connect__impl, 1},
+    {"savvy_connect__impl", (DL_FUNC) &savvy_connect__impl, 5},
     {"savvy_RGlareDbConnection_sql__impl", (DL_FUNC) &savvy_RGlareDbConnection_sql__impl, 2},
     {"savvy_RGlareDbExecutionOutput_export_stream__impl", (DL_FUNC) &savvy_RGlareDbExecutionOutput_export_stream__impl, 2},
 
