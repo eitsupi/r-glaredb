@@ -44,7 +44,9 @@ impl EnvironmentReader for REnvironmentReader {
                 .unwrap()
                 .inner(),
             );
-            let stream_reader = ArrowArrayStreamReader::from_r(sexp).unwrap();
+            let stream_ptr = savvy::ExternalPointerSexp::try_from(sexp).unwrap();
+            let stream = unsafe { stream_ptr.cast_mut_unchecked::<FFI_ArrowArrayStream>() };
+            let stream_reader = unsafe { ArrowArrayStreamReader::from_raw(stream).unwrap() };
             let schema = stream_reader.schema();
             let batches =
                 stream_reader.collect::<Result<Vec<RecordBatch>, arrow::error::ArrowError>>()?;
@@ -54,40 +56,5 @@ impl EnvironmentReader for REnvironmentReader {
         }
 
         Ok(None)
-    }
-}
-
-trait FromRArrowArrayStream: Sized {
-    fn from_r(sexp: savvy::Sexp) -> Result<Self, savvy::Error>;
-}
-
-// Import nanoarrow_array_stream
-// Copied from https://github.com/JosiahParry/arrow-extendr/blob/1ff628cd5e9c208c1aff99bc8aa92a3b7b9303dc/src/from.rs#L286-L302
-impl FromRArrowArrayStream for ArrowArrayStreamReader {
-    fn from_r(sexp: savvy::Sexp) -> Result<Self, savvy::Error> {
-        if sexp
-            .get_class()
-            .unwrap_or_default()
-            .iter()
-            .all(|&s| s != "nanoarrow_array_stream")
-        {
-            return Err(savvy::Error::from("Not a nanoarrow_array_stream"));
-        }
-
-        let func = savvy::FunctionSexp(
-            savvy::eval_parse_text(r#"nanoarrow::nanoarrow_pointer_export"#)
-                .unwrap()
-                .inner(),
-        );
-
-        let stream = FFI_ArrowArrayStream::empty();
-        let stream_ptr = &stream as *const FFI_ArrowArrayStream as usize;
-        let mut args = savvy::FunctionArgs::new();
-        args.add("ptr_src", sexp)?;
-        args.add("ptr_dst", stream_ptr.to_string())?;
-
-        let _ = func.call(args)?;
-
-        ArrowArrayStreamReader::try_new(stream).map_err(|e| savvy::Error::from(e.to_string()))
     }
 }
