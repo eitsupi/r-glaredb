@@ -64,6 +64,11 @@ jobs:
       DEBUG: "true"
 
     steps:
+      - name: more space
+        if: runner.os == 'Linux'
+        run: |
+          docker image prune --all --force
+
       - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
