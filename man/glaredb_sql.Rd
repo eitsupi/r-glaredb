@@ -8,6 +8,8 @@ glaredb_sql(query)
 }
 \arguments{
 \item{query}{A character of the SQL query to run}
+
+\item{env}{TODO}
 }
 \value{
 GlareDB execusion output
