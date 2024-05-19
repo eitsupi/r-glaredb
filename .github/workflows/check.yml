@@ -110,6 +110,8 @@ jobs:
           echo "LIBR_GLAREDB_PATH=$(pwd)/src/rust/target/${{ steps.rust-target.outputs.TARGET }}/release/librglaredb.a" >>$GITHUB_ENV
 
       - uses: r-lib/actions/check-r-package@v2
+        env:
+          LIBR_GLAREDB_BUILD: "false"
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
