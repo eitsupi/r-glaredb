@@ -20,8 +20,8 @@ NULL
 }
 
 
-sql <- function(query, env = NULL) {
-  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_sql__impl, query, env))
+sql <- function(query) {
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_sql__impl, query))
 }
 
 

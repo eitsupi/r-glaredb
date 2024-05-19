@@ -9,7 +9,7 @@ crate-type = ["staticlib"]
 
 [dependencies]
 # savvy = "0.6.3" # TODO: update after > 0.6.3 released
-savvy = { git = "https://github.com/yutannihilation/savvy", branch = "env" }
+savvy = { git = "https://github.com/yutannihilation/savvy", rev = "b0002cecf8aaecc9071ae65a6772691bbbd4063e" }
 datafusion = { version = "36.0.0", features = ["avro"] }
 tokio = { version = "1", features = ["full"] }
 arrow = { version = "50.0.0", features = ["ffi"] }

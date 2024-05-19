@@ -6,11 +6,9 @@ mod execution;
 mod runtime;
 use connection::RGlareDbConnection;
 use execution::RGlareDbExecutionOutput;
-use savvy::{savvy, EnvironmentSexp};
+use savvy::savvy;
 
 #[savvy]
-pub fn sql(query: &str, env: Option<EnvironmentSexp>) -> savvy::Result<RGlareDbExecutionOutput> {
-    let env = env.unwrap_or(EnvironmentSexp::global_env());
-
-    RGlareDbConnection::default_in_memory(env)?.sql(query)
+pub fn sql(query: &str) -> savvy::Result<RGlareDbExecutionOutput> {
+    RGlareDbConnection::default_in_memory()?.sql(query)
 }

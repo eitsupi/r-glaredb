@@ -6,6 +6,6 @@
 #' @examples
 #' glaredb_sql("SELECT 'hello from R' as hello") |>
 #'   as.data.frame()
-glaredb_sql <- function(query, env = parent.frame()) {
-  sql(query, env = env)
+glaredb_sql <- function(query) {
+  sql(query)
 }

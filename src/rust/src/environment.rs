@@ -5,7 +5,7 @@ use datafusion::arrow::array::RecordBatch;
 use datafusion::datasource::{MemTable, TableProvider};
 use savvy::ffi::SEXP;
 use savvy::protect::{insert_to_preserved_list, release_from_preserved_list};
-use savvy::EnvironmentSexp;
+use savvy::{EnvironmentSexp, Sexp};
 use sqlexec::environment::EnvironmentReader;
 use std::sync::{Arc, Mutex};
 
@@ -66,13 +66,17 @@ impl EnvironmentReader for REnvironmentReader {
             .iter()
             .any(|&s| s == "RPolarsDataFrame" || s == "ArrowTabular")
         {
-            let sexp = savvy::Sexp(
-                savvy::eval_parse_text(format!(
-                    r#"base::get0(r"({name})") |> nanoarrow::as_nanoarrow_array_stream()"#
-                ))
+            let func = savvy::FunctionSexp::try_from(savvy::Sexp(
+                savvy::eval_parse_text(
+                    r#"utils::getFromNamespace("as_nanoarrow_array_stream", "nanoarrow")"#,
+                )
                 .unwrap()
                 .inner(),
-            );
+            ))
+            .unwrap();
+            let mut args = savvy::FunctionArgs::new();
+            let _ = args.add("x", obj);
+            let sexp = Sexp::try_from(func.call(args).unwrap()).unwrap();
             let stream_ptr = savvy::ExternalPointerSexp::try_from(sexp).unwrap();
             let stream = unsafe { stream_ptr.cast_mut_unchecked::<FFI_ArrowArrayStream>() };
             let stream_reader = unsafe { ArrowArrayStreamReader::from_raw(stream).unwrap() };

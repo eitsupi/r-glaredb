@@ -14,7 +14,7 @@ struct RGlareDbConnection {
 
 impl RGlareDbConnection {
     // TODO: support async
-    pub fn default_in_memory(env: EnvironmentSexp) -> savvy::Result<RGlareDbConnection> {
+    pub fn default_in_memory() -> savvy::Result<RGlareDbConnection> {
         static DEFAULT_CON: OnceCell<RGlareDbConnection> = OnceCell::new();
 
         let con = DEFAULT_CON.get_or_try_init(|| {
@@ -22,7 +22,9 @@ impl RGlareDbConnection {
                 Ok(RGlareDbConnection {
                     inner: Arc::new(
                         glaredb::ConnectOptionsBuilder::new_in_memory()
-                            .environment_reader(Arc::new(REnvironmentReader::new(env)))
+                            .environment_reader(Arc::new(REnvironmentReader::new(
+                                EnvironmentSexp::global_env(),
+                            )))
                             .build()?
                             .connect()
                             .await?,
