@@ -20,13 +20,13 @@ NULL
 }
 
 
-sql <- function(query) {
-  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_sql__impl, query))
+sql <- function(query, env = NULL) {
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_sql__impl, query, env))
 }
 
 
-connect <- function(cloud_addr, disable_tls, data_dir_or_cloud_url = NULL, spill_path = NULL, location = NULL) {
-  .savvy_wrap_RGlareDbConnection(.Call(savvy_connect__impl, cloud_addr, disable_tls, data_dir_or_cloud_url, spill_path, location))
+connect <- function(cloud_addr, disable_tls, data_dir_or_cloud_url = NULL, spill_path = NULL, location = NULL, env = NULL) {
+  .savvy_wrap_RGlareDbConnection(.Call(savvy_connect__impl, cloud_addr, disable_tls, data_dir_or_cloud_url, spill_path, location, env))
 }
 
 ### wrapper functions for RGlareDbConnection
