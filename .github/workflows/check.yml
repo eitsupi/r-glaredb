@@ -86,6 +86,8 @@ jobs:
           needs: check
 
       - uses: arduino/setup-protoc@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: ilammy/setup-nasm@v1
         if: runner.os == 'Windows'
