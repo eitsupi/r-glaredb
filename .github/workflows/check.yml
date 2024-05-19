@@ -66,8 +66,7 @@ jobs:
     steps:
       - name: more space
         if: runner.os == 'Linux'
-        run: |
-          docker image prune --all --force
+        uses: jlumbroso/free-disk-space@v1.3.1
 
       - uses: actions/checkout@v4
 
