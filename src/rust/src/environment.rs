@@ -3,31 +3,47 @@ use arrow::array::RecordBatchReader;
 use arrow::ffi_stream::{ArrowArrayStreamReader, FFI_ArrowArrayStream};
 use datafusion::arrow::array::RecordBatch;
 use datafusion::datasource::{MemTable, TableProvider};
+use savvy::ffi::SEXP;
+use savvy::protect::{insert_to_preserved_list, release_from_preserved_list};
+use savvy::EnvironmentSexp;
 use sqlexec::environment::EnvironmentReader;
 use std::sync::Arc;
 
-#[derive(Debug, Clone, Copy)]
-pub struct REnvironmentReader;
+pub struct REnvironmentReader {
+    env: EnvironmentSexp,
+    token: SEXP,
+}
+
+unsafe impl std::marker::Send for REnvironmentReader {}
+unsafe impl std::marker::Sync for REnvironmentReader {}
+
+impl REnvironmentReader {
+    pub(crate) fn new(env: EnvironmentSexp) -> Self {
+        let token = insert_to_preserved_list(env.inner());
+        Self { env, token }
+    }
+}
+
+impl Drop for REnvironmentReader {
+    fn drop(&mut self) {
+        release_from_preserved_list(self.token)
+    }
+}
 
 impl EnvironmentReader for REnvironmentReader {
-    #[allow(unused_variables)]
     fn resolve_table(
         &self,
         name: &str,
     ) -> Result<Option<Arc<dyn TableProvider>>, Box<dyn std::error::Error + Send + Sync>> {
-        let classes = savvy::StringSexp(
-            savvy::eval_parse_text(format!(r#"base::get0(r"({name})") |> class()"#))
-                .unwrap()
-                .inner(),
-        )
-        .to_vec();
+        let obj = self.env.get(name)?.ok_or("Not Found")?;
+        let classes = obj.get_class().unwrap_or(vec![]);
 
         if classes.iter().any(|&s| s == "RGlareDbExecutionOutput") {
-            let sexp = savvy::Sexp(
-                savvy::eval_parse_text(format!(r#"base::get0(r"({name})")$.ptr"#))
-                    .unwrap()
-                    .inner(),
-            );
+            let sexp = EnvironmentSexp::try_from(obj)
+                .unwrap()
+                .get(".ptr")
+                .expect("RGlareDbExecutionOutput should have .ptr")
+                .ok_or("Not found")?;
             let exec = <&RGlareDbExecutionOutput>::try_from(sexp).unwrap().clone();
 
             return Ok(Some(Arc::new(exec) as Arc<dyn TableProvider>));
