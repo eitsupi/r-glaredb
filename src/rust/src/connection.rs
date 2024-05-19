@@ -3,7 +3,7 @@ use crate::error::RGlareDbError;
 use crate::execution::RGlareDbExecutionOutput;
 use crate::runtime::GLOBAL_RUNTIME;
 use once_cell::sync::OnceCell;
-use savvy::savvy;
+use savvy::{savvy, EnvironmentSexp};
 use std::sync::Arc;
 
 #[savvy]
@@ -22,7 +22,9 @@ impl RGlareDbConnection {
                 Ok(RGlareDbConnection {
                     inner: Arc::new(
                         glaredb::ConnectOptionsBuilder::new_in_memory()
-                            .environment_reader(Arc::new(REnvironmentReader))
+                            .environment_reader(Arc::new(REnvironmentReader::new(
+                                EnvironmentSexp::global_env(),
+                            )))
                             .build()?
                             .connect()
                             .await?,

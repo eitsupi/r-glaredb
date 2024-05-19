@@ -3,31 +3,60 @@ use arrow::array::RecordBatchReader;
 use arrow::ffi_stream::{ArrowArrayStreamReader, FFI_ArrowArrayStream};
 use datafusion::arrow::array::RecordBatch;
 use datafusion::datasource::{MemTable, TableProvider};
+use savvy::ffi::SEXP;
+use savvy::protect::{insert_to_preserved_list, release_from_preserved_list};
+use savvy::{EnvironmentSexp, Sexp};
 use sqlexec::environment::EnvironmentReader;
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 
-#[derive(Debug, Clone, Copy)]
-pub struct REnvironmentReader;
+// TODO
+struct UnsafeToken(SEXP);
+unsafe impl std::marker::Send for UnsafeToken {}
+unsafe impl std::marker::Sync for UnsafeToken {}
+struct UnsafeEnvironmentSexp(EnvironmentSexp);
+unsafe impl std::marker::Send for UnsafeEnvironmentSexp {}
+unsafe impl std::marker::Sync for UnsafeEnvironmentSexp {}
+
+pub struct REnvironmentReader {
+    env: Arc<Mutex<UnsafeEnvironmentSexp>>,
+    token: UnsafeToken,
+}
+
+impl REnvironmentReader {
+    pub(crate) fn new(env: EnvironmentSexp) -> Self {
+        let token = insert_to_preserved_list(env.inner());
+        Self {
+            env: Arc::new(Mutex::new(UnsafeEnvironmentSexp(env))),
+            token: UnsafeToken(token),
+        }
+    }
+}
+
+impl Drop for REnvironmentReader {
+    fn drop(&mut self) {
+        release_from_preserved_list(self.token.0)
+    }
+}
 
 impl EnvironmentReader for REnvironmentReader {
-    #[allow(unused_variables)]
     fn resolve_table(
         &self,
         name: &str,
     ) -> Result<Option<Arc<dyn TableProvider>>, Box<dyn std::error::Error + Send + Sync>> {
-        let classes = savvy::StringSexp(
-            savvy::eval_parse_text(format!(r#"base::get0(r"({name})") |> class()"#))
-                .unwrap()
-                .inner(),
-        )
-        .to_vec();
+        let env = (*self.env).lock().unwrap();
+        let obj = env
+            .0
+            .get(name)
+            .map_err(|e| e.to_string())?
+            .ok_or("Not Found")?;
+        let classes = obj.get_class().unwrap_or(vec![]);
 
         if classes.iter().any(|&s| s == "RGlareDbExecutionOutput") {
-            let sexp = savvy::Sexp(
-                savvy::eval_parse_text(format!(r#"base::get0(r"({name})")$.ptr"#))
-                    .unwrap()
-                    .inner(),
-            );
+            let sexp = EnvironmentSexp::try_from(obj)
+                .unwrap()
+                .get(".ptr")
+                .expect("RGlareDbExecutionOutput should have .ptr")
+                .ok_or("Not found")?;
             let exec = <&RGlareDbExecutionOutput>::try_from(sexp).unwrap().clone();
 
             return Ok(Some(Arc::new(exec) as Arc<dyn TableProvider>));
@@ -37,13 +66,17 @@ impl EnvironmentReader for REnvironmentReader {
             .iter()
             .any(|&s| s == "RPolarsDataFrame" || s == "ArrowTabular")
         {
-            let sexp = savvy::Sexp(
-                savvy::eval_parse_text(format!(
-                    r#"base::get0(r"({name})") |> nanoarrow::as_nanoarrow_array_stream()"#
-                ))
+            let func = savvy::FunctionSexp::try_from(savvy::Sexp(
+                savvy::eval_parse_text(
+                    r#"utils::getFromNamespace("as_nanoarrow_array_stream", "nanoarrow")"#,
+                )
                 .unwrap()
                 .inner(),
-            );
+            ))
+            .unwrap();
+            let mut args = savvy::FunctionArgs::new();
+            let _ = args.add("x", obj);
+            let sexp = Sexp::try_from(func.call(args).unwrap()).unwrap();
             let stream_ptr = savvy::ExternalPointerSexp::try_from(sexp).unwrap();
             let stream = unsafe { stream_ptr.cast_mut_unchecked::<FFI_ArrowArrayStream>() };
             let stream_reader = unsafe { ArrowArrayStreamReader::from_raw(stream).unwrap() };
