@@ -7,26 +7,34 @@ use savvy::ffi::SEXP;
 use savvy::protect::{insert_to_preserved_list, release_from_preserved_list};
 use savvy::EnvironmentSexp;
 use sqlexec::environment::EnvironmentReader;
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
+
+// TODO
+struct UnsafeToken(SEXP);
+unsafe impl std::marker::Send for UnsafeToken {}
+unsafe impl std::marker::Sync for UnsafeToken {}
+struct UnsafeEnvironmentSexp(EnvironmentSexp);
+unsafe impl std::marker::Send for UnsafeEnvironmentSexp {}
+unsafe impl std::marker::Sync for UnsafeEnvironmentSexp {}
 
 pub struct REnvironmentReader {
-    env: EnvironmentSexp,
-    token: SEXP,
+    env: Arc<Mutex<UnsafeEnvironmentSexp>>,
+    token: UnsafeToken,
 }
-
-unsafe impl std::marker::Send for REnvironmentReader {}
-unsafe impl std::marker::Sync for REnvironmentReader {}
 
 impl REnvironmentReader {
     pub(crate) fn new(env: EnvironmentSexp) -> Self {
         let token = insert_to_preserved_list(env.inner());
-        Self { env, token }
+        Self {
+            env: Arc::new(Mutex::new(UnsafeEnvironmentSexp(env))),
+            token: UnsafeToken(token),
+        }
     }
 }
 
 impl Drop for REnvironmentReader {
     fn drop(&mut self) {
-        release_from_preserved_list(self.token)
+        release_from_preserved_list(self.token.0)
     }
 }
 
@@ -35,7 +43,12 @@ impl EnvironmentReader for REnvironmentReader {
         &self,
         name: &str,
     ) -> Result<Option<Arc<dyn TableProvider>>, Box<dyn std::error::Error + Send + Sync>> {
-        let obj = self.env.get(name)?.ok_or("Not Found")?;
+        let env = (*self.env).lock().unwrap();
+        let obj = env
+            .0
+            .get(name)
+            .map_err(|e| e.to_string())?
+            .ok_or("Not Found")?;
         let classes = obj.get_class().unwrap_or(vec![]);
 
         if classes.iter().any(|&s| s == "RGlareDbExecutionOutput") {
