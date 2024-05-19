@@ -1,6 +1,5 @@
 #' Run a SQL query against the default in-memory GlareDB database
 #' @param query A character of the SQL query to run
-#' @param env TODO
 #' @return GlareDB execusion output
 #' @export
 #' @examples
