@@ -6,7 +6,7 @@ use savvy::{savvy, EnvironmentSexp};
 use std::sync::Arc;
 
 #[savvy]
-pub fn connect_(
+pub fn connect(
     cloud_addr: &str,
     disable_tls: bool,
     data_dir_or_cloud_url: Option<&str>,
