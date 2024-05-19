@@ -1,6 +1,8 @@
 ^LICENSE\.md$
 ^\.devcontainer$
 ^\.github$
+^\.task$
+^\.vscode$
 ^\.editorconfig$
 ^\.lintr$
 ^_pkgdown\.yml$
@@ -12,7 +14,6 @@
 ^dev$
 ^README\.Rmd$
 ^Taskfile\.yml$
-^\.task$
 ^src/\.cargo$
 ^src/rust/vendor$
 ^src/Makevars$
