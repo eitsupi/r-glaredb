@@ -12,6 +12,7 @@ struct RGlareDbConnection {
     pub(crate) inner: Arc<glaredb::Connection>,
 }
 
+#[savvy]
 impl RGlareDbConnection {
     // TODO: support async
     pub fn default_in_memory() -> savvy::Result<RGlareDbConnection> {
@@ -35,10 +36,7 @@ impl RGlareDbConnection {
 
         Ok(con.clone())
     }
-}
 
-#[savvy]
-impl RGlareDbConnection {
     pub fn sql(&self, query: &str) -> savvy::Result<RGlareDbExecutionOutput> {
         Ok(GLOBAL_RUNTIME
             .0

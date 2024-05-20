@@ -20,7 +20,7 @@ NULL
 }
 
 
-sql <- function(query, connection = NULL) {
+sql <- function(query, connection) {
   connection <- .savvy_extract_ptr(connection, "RGlareDbConnection")
   .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_sql__impl, query, connection))
 }
@@ -53,6 +53,9 @@ RGlareDbConnection <- new.env(parent = emptyenv())
 
 ### associated functions for RGlareDbConnection
 
+RGlareDbConnection$default_in_memory <- function() {
+  .savvy_wrap_RGlareDbConnection(.Call(savvy_RGlareDbConnection_default_in_memory__impl))
+}
 
 
 ### wrapper functions for RGlareDbExecutionOutput

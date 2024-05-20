@@ -8,5 +8,5 @@
 #' glaredb_sql("SELECT 'hello from R' as hello") |>
 #'   as.data.frame()
 glaredb_sql <- function(query, connection = NULL) {
-  sql(query, connection)
+  sql(query, connection %||% RGlareDbConnection$default_in_memory())
 }

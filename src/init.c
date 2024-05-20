@@ -44,6 +44,11 @@ SEXP savvy_connect__impl(SEXP cloud_addr, SEXP disable_tls, SEXP data_dir_or_clo
     return handle_result(res);
 }
 
+SEXP savvy_RGlareDbConnection_default_in_memory__impl(void) {
+    SEXP res = savvy_RGlareDbConnection_default_in_memory__ffi();
+    return handle_result(res);
+}
+
 SEXP savvy_RGlareDbConnection_sql__impl(SEXP self__, SEXP query) {
     SEXP res = savvy_RGlareDbConnection_sql__ffi(self__, query);
     return handle_result(res);
@@ -59,6 +64,7 @@ SEXP savvy_RGlareDbExecutionOutput_export_stream__impl(SEXP self__, SEXP stream_
 static const R_CallMethodDef CallEntries[] = {
     {"savvy_sql__impl", (DL_FUNC) &savvy_sql__impl, 2},
     {"savvy_connect__impl", (DL_FUNC) &savvy_connect__impl, 6},
+    {"savvy_RGlareDbConnection_default_in_memory__impl", (DL_FUNC) &savvy_RGlareDbConnection_default_in_memory__impl, 0},
     {"savvy_RGlareDbConnection_sql__impl", (DL_FUNC) &savvy_RGlareDbConnection_sql__impl, 2},
     {"savvy_RGlareDbExecutionOutput_export_stream__impl", (DL_FUNC) &savvy_RGlareDbExecutionOutput_export_stream__impl, 2},
 
