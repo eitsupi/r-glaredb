@@ -1,5 +1,118 @@
+#!/usr/bin/env sh
+
+# Mostly copied from https://github.com/PRQL/prqlc-r/blob/60495ea58d91d6dd36fddd9f1b0b426e10eb3674/configure
+
+NOT_CRAN=${NOT_CRAN:-"false"}
+LIBR_GLAREDB_BUILD=${LIBR_GLAREDB_BUILD:-""}
+
+LIBNAME="libr_glaredb.a"
+LIBR_GLAREDB_DEFAULT_PATH="$(pwd)/tools/${LIBNAME}"
+LIBR_GLAREDB_PATH=${LIBR_GLAREDB_PATH:-${LIBR_GLAREDB_DEFAULT_PATH}}
+
+export PATH="$PATH:$HOME/.cargo/bin"
+
+check_cargo() {
+  if [ ! "$(command -v cargo)" ]; then
+    echo ""
+    echo "------------------------- [RUST NOT FOUND] -------------------------"
+    echo "The 'cargo' command was not found on the PATH. Please install rustc"
+    echo "from: https://www.rust-lang.org/tools/install"
+    echo ""
+    echo "Alternatively, you may install cargo from your OS package manager:"
+    echo " - Debian/Ubuntu: apt-get install cargo"
+    echo " - Fedora/CentOS: dnf install cargo"
+    echo " - macOS: brew install rustc"
+    echo "--------------------------------------------------------------------"
+    echo ""
+    exit 1
+  else
+    echo ""
+    echo "--------------------------- [RUST FOUND] ---------------------------"
+    cargo -V
+    echo ""
+    rustc -vV
+    echo "--------------------------------------------------------------------"
+    echo ""
+  fi
+}
+
+check_bin_lib() {
+  if [ "${NOT_CRAN}" = "true" ] && [ -z "${LIBR_GLAREDB_BUILD}" ]; then
+    LIBR_GLAREDB_BUILD="false"
+  fi
+
+  if [ "${LIBR_GLAREDB_BUILD}" = "false" ] && [ -f "tools/lib-sums.tsv" ] && [ ! -f "${LIBR_GLAREDB_PATH}" ]; then
+    echo ""
+    echo "--------------- [TRY TO DOWNLOAD PRE-BUILT BINARY] ---------------"
+    "${R_HOME}/bin${R_ARCH_BIN}/Rscript" "tools/prep-lib.R" || echo "Failed to download pre-built binary."
+    echo "--------------------------------------------------------------------"
+    echo ""
+  fi
+
+  if [ "${LIBR_GLAREDB_BUILD}" = "false" ] && [ -f "${LIBR_GLAREDB_PATH}" ]; then
+    echo ""
+    echo "---------------------- [LIBRARY BINARY FOUND] ----------------------"
+    echo "The library was found at <${LIBR_GLAREDB_PATH}>. No need to build it."
+    echo "--------------------------------------------------------------------"
+    echo ""
+    sed -e "s|@RUST_TARGET@||" src/Makevars.in >src/Makevars
+    if [ "${LIBR_GLAREDB_PATH}" != "${LIBR_GLAREDB_DEFAULT_PATH}" ]; then
+      echo ""
+      echo "------------------------ [COPYING BINARY] ------------------------"
+      echo "Copying <${LIBR_GLAREDB_PATH}> to <${LIBR_GLAREDB_DEFAULT_PATH}>."
+      mkdir -p "$(dirname "${LIBR_GLAREDB_DEFAULT_PATH}")"
+      cp "${LIBR_GLAREDB_PATH}" "${LIBR_GLAREDB_DEFAULT_PATH}" || echo "Failed to copy binary."
+      echo "------------------------------------------------------------------"
+      echo ""
+    fi
+    exit 0
+  elif [ "${LIBR_GLAREDB_BUILD}" = "false" ] && [ -f "${LIBR_GLAREDB_DEFAULT_PATH}" ]; then
+    echo ""
+    echo "---------------------- [LIBRARY BINARY FOUND] ----------------------"
+    echo "The library was not found at <${LIBR_GLAREDB_PATH}>,"
+    echo "but was found at <${LIBR_GLAREDB_DEFAULT_PATH}>."
+    echo "No need to build it."
+    echo "--------------------------------------------------------------------"
+    echo ""
+    sed -e "s|@RUST_TARGET@||" src/Makevars.in >src/Makevars
+    exit 0
+  elif [ "${LIBR_GLAREDB_BUILD}" = "false" ]; then
+    echo ""
+    echo "-------------------- [LIBRARY BINARY NOT FOUND] --------------------"
+    echo "The library was not found at <${LIBR_GLAREDB_PATH}>."
+    echo "Falling back to building from source."
+    echo "--------------------------------------------------------------------"
+    echo ""
+  fi
+}
+
+detect_target_option() {
+  for option in "$@"; do
+    case "${option}" in
+    --host=*)
+      specified_target="$(echo "${option}" | sed -e 's/--host=//' | sed -E 's/([0-9]+\.)*[0-9]+$//')"
+      echo ""
+      echo "------------------------------ [DETECTED TARGET] ------------------------------"
+      echo "The target was specified as <${specified_target}> via the '--host' option."
+      echo "-------------------------------------------------------------------------------"
+      echo ""
+      export TARGET="${specified_target}"
+      ;;
+    *) ;;
+    esac
+    shift
+  done
+}
+
+detect_target_option "$@"
+check_bin_lib
+check_cargo
+
 if [ "$(uname)" = "Emscripten" ]; then
-  TARGET="wasm32-unknown-emscripten"
+  HOST_TRIPLE="wasm32-unknown-emscripten"
+else
+  HOST_TRIPLE="$(rustc -vV | grep host | cut -d' ' -f2)"
 fi
 
-sed -e "s/@TARGET@/${TARGET}/" src/Makevars.in > src/Makevars
+TARGET="${TARGET:-${HOST_TRIPLE}}"
+sed -e "s/@TARGET@/${TARGET}/" src/Makevars.in >src/Makevars

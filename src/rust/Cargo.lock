@@ -5700,12 +5700,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "db23d408679286588f4d4644f965003d056e3dd5abcaaa938116871d7ce2fee7"
 
 [[package]]
-name = "pollster"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "22686f4785f02a4fcc856d3b3bb19bf6c8160d103f7a99cc258bddd0251dc7f2"
-
-[[package]]
 name = "postgres-protocol"
 version = "0.6.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6084,11 +6078,11 @@ dependencies = [
  "futures",
  "glaredb",
  "ioutil",
+ "lzma-sys",
  "metastore",
  "once_cell",
  "pgrepr",
  "pgsrv",
- "pollster",
  "savvy",
  "sqlexec",
  "telemetry",

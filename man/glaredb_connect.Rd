@@ -10,7 +10,8 @@ glaredb_connect(
   spill_path = NULL,
   disable_tls = FALSE,
   cloud_addr = "https://console.glaredb.com",
-  location = NULL
+  location = NULL,
+  env = parent.frame()
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ a cloud URL or \code{NULL}. If \code{NULL}, a in-memory database is used.}
 \item{cloud_addr}{A character of a GlareDB cloud URL.}
 
 \item{location}{TODO}
+
+\item{env}{TODO}
 }
 \value{
 GlareDB connection object
