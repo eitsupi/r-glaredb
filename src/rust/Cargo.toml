@@ -15,7 +15,7 @@ tokio = { version = "1", features = ["full"] }
 arrow = { version = "50.0.0", features = ["ffi"] }
 thiserror = "1.0"
 url = "2.5.0"
-anyhow = "1.0.83"
+anyhow = "1.0.86"
 async-trait = "0.1.80"
 futures = "0.3.30"
 uuid = "1.8.0"
