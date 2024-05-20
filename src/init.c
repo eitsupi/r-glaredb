@@ -39,6 +39,16 @@ SEXP savvy_sql__impl(SEXP query, SEXP connection) {
     return handle_result(res);
 }
 
+SEXP savvy_prql__impl(SEXP query, SEXP connection) {
+    SEXP res = savvy_prql__ffi(query, connection);
+    return handle_result(res);
+}
+
+SEXP savvy_execute__impl(SEXP query, SEXP connection) {
+    SEXP res = savvy_execute__ffi(query, connection);
+    return handle_result(res);
+}
+
 SEXP savvy_connect__impl(SEXP cloud_addr, SEXP disable_tls, SEXP data_dir_or_cloud_url, SEXP spill_path, SEXP location, SEXP env) {
     SEXP res = savvy_connect__ffi(cloud_addr, disable_tls, data_dir_or_cloud_url, spill_path, location, env);
     return handle_result(res);
@@ -54,6 +64,16 @@ SEXP savvy_RGlareDbConnection_sql__impl(SEXP self__, SEXP query) {
     return handle_result(res);
 }
 
+SEXP savvy_RGlareDbConnection_prql__impl(SEXP self__, SEXP query) {
+    SEXP res = savvy_RGlareDbConnection_prql__ffi(self__, query);
+    return handle_result(res);
+}
+
+SEXP savvy_RGlareDbConnection_execute__impl(SEXP self__, SEXP query) {
+    SEXP res = savvy_RGlareDbConnection_execute__ffi(self__, query);
+    return handle_result(res);
+}
+
 SEXP savvy_RGlareDbExecutionOutput_export_stream__impl(SEXP self__, SEXP stream_ptr) {
     SEXP res = savvy_RGlareDbExecutionOutput_export_stream__ffi(self__, stream_ptr);
     return handle_result(res);
@@ -63,9 +83,13 @@ SEXP savvy_RGlareDbExecutionOutput_export_stream__impl(SEXP self__, SEXP stream_
 
 static const R_CallMethodDef CallEntries[] = {
     {"savvy_sql__impl", (DL_FUNC) &savvy_sql__impl, 2},
+    {"savvy_prql__impl", (DL_FUNC) &savvy_prql__impl, 2},
+    {"savvy_execute__impl", (DL_FUNC) &savvy_execute__impl, 2},
     {"savvy_connect__impl", (DL_FUNC) &savvy_connect__impl, 6},
     {"savvy_RGlareDbConnection_default_in_memory__impl", (DL_FUNC) &savvy_RGlareDbConnection_default_in_memory__impl, 0},
     {"savvy_RGlareDbConnection_sql__impl", (DL_FUNC) &savvy_RGlareDbConnection_sql__impl, 2},
+    {"savvy_RGlareDbConnection_prql__impl", (DL_FUNC) &savvy_RGlareDbConnection_prql__impl, 2},
+    {"savvy_RGlareDbConnection_execute__impl", (DL_FUNC) &savvy_RGlareDbConnection_execute__impl, 2},
     {"savvy_RGlareDbExecutionOutput_export_stream__impl", (DL_FUNC) &savvy_RGlareDbExecutionOutput_export_stream__impl, 2},
 
     {NULL, NULL, 0}

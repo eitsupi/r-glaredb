@@ -2,12 +2,22 @@
 % Please edit documentation in R/query.R
 \name{glaredb_sql}
 \alias{glaredb_sql}
-\title{Run a SQL query against the default in-memory GlareDB database}
+\alias{glaredb_prql}
+\alias{glaredb_execute}
+\title{Run a query against a GlareDB database}
 \usage{
 glaredb_sql(query, connection = NULL)
+
+glaredb_prql(query, connection = NULL)
+
+glaredb_execute(query, connection = NULL)
 }
 \arguments{
-\item{query}{A character of the SQL query to run}
+\item{query}{A character of the query to run.
+\itemize{
+\item For \link{glaredb_sql} and \link{glaredb_execute}, a SQL query.
+\item For \link{glaredb_prql}, a PRQL query.
+}}
 
 \item{connection}{A \link[=glaredb_connect]{GlareDB connection object} or \code{NULL}.
 If \code{NULL}, the default in-memory database is used.}
@@ -16,9 +26,20 @@ If \code{NULL}, the default in-memory database is used.}
 GlareDB execusion output
 }
 \description{
-Run a SQL query against the default in-memory GlareDB database
+Run a query against a GlareDB database
 }
 \examples{
 glaredb_sql("SELECT 'hello from R' as hello") |>
+  as.data.frame()
+
+glaredb_prql("from [
+  {a=5, b=false},
+  {a=6, b=true},
+]") |>
+  as.data.frame()
+
+glaredb_execute("create table my_table (a int)")
+glaredb_execute("insert into my_table values (1), (2)")
+glaredb_sql("select * from my_table") |>
   as.data.frame()
 }
