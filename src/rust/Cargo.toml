@@ -13,7 +13,6 @@ savvy = { git = "https://github.com/yutannihilation/savvy", rev = "b0002cecf8aae
 datafusion = { version = "36.0.0", features = ["avro"] }
 tokio = { version = "1", features = ["full"] }
 arrow = { version = "50.0.0", features = ["ffi"] }
-pollster = "0.3.0"
 thiserror = "1.0"
 url = "2.5.0"
 anyhow = "1.0.83"
@@ -31,3 +30,6 @@ pgrepr = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c8
 datafusion_ext = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
 arrow_util = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
 terminal_util = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
+
+# Prevent dynamic linking of lzma, which comes from datafusion
+lzma-sys = { version = "*", features = ["static"] }
