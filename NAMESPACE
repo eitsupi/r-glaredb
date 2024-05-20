@@ -3,6 +3,8 @@
 S3method(as.data.frame,RGlareDbExecutionOutput)
 S3method(as_nanoarrow_array_stream,RGlareDbExecutionOutput)
 export(glaredb_connect)
+export(glaredb_execute)
+export(glaredb_prql)
 export(glaredb_sql)
 importFrom(nanoarrow,as_nanoarrow_array_stream)
 importFrom(nanoarrow,nanoarrow_allocate_array_stream)

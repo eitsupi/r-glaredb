@@ -11,6 +11,10 @@ NULL
 
 # Check class and extract the external pointer embedded in the environment
 .savvy_extract_ptr <- function(e, class) {
+  if(is.null(e)) {
+    return(NULL)
+  }
+
   if(inherits(e, class)) {
     e$.ptr
   } else {
@@ -20,9 +24,21 @@ NULL
 }
 
 
-sql <- function(query, connection) {
+sql <- function(query, connection = NULL) {
   connection <- .savvy_extract_ptr(connection, "RGlareDbConnection")
   .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_sql__impl, query, connection))
+}
+
+
+prql <- function(query, connection = NULL) {
+  connection <- .savvy_extract_ptr(connection, "RGlareDbConnection")
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_prql__impl, query, connection))
+}
+
+
+execute <- function(query, connection = NULL) {
+  connection <- .savvy_extract_ptr(connection, "RGlareDbConnection")
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_execute__impl, query, connection))
 }
 
 
@@ -38,10 +54,24 @@ RGlareDbConnection_sql <- function(self) {
   }
 }
 
+RGlareDbConnection_prql <- function(self) {
+  function(query) {
+    .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_RGlareDbConnection_prql__impl, self, query))
+  }
+}
+
+RGlareDbConnection_execute <- function(self) {
+  function(query) {
+    .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_RGlareDbConnection_execute__impl, self, query))
+  }
+}
+
 .savvy_wrap_RGlareDbConnection <- function(ptr) {
   e <- new.env(parent = emptyenv())
   e$.ptr <- ptr
     e$sql <- RGlareDbConnection_sql(ptr)
+  e$prql <- RGlareDbConnection_prql(ptr)
+  e$execute <- RGlareDbConnection_execute(ptr)
   
   class(e) <- "RGlareDbConnection"
   e

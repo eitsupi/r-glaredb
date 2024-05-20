@@ -44,11 +44,14 @@ impl EnvironmentReader for REnvironmentReader {
         name: &str,
     ) -> Result<Option<Arc<dyn TableProvider>>, Box<dyn std::error::Error + Send + Sync>> {
         let env = (*self.env).lock().unwrap();
-        let obj = env
+        let Ok(obj) = env
             .0
             .get(name)
             .map_err(|e| e.to_string())?
-            .ok_or("Not Found")?;
+            .ok_or("Not Found")
+        else {
+            return Ok(None);
+        };
         let classes = obj.get_class().unwrap_or(vec![]);
 
         if classes.iter().any(|&s| s == "RGlareDbExecutionOutput") {

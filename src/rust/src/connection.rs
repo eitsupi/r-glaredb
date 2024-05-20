@@ -44,4 +44,20 @@ impl RGlareDbConnection {
             .map_err(RGlareDbError::from)?
             .into())
     }
+
+    pub fn prql(&self, query: &str) -> savvy::Result<RGlareDbExecutionOutput> {
+        Ok(GLOBAL_RUNTIME
+            .0
+            .block_on(self.inner.prql(query).evaluate())
+            .map_err(RGlareDbError::from)?
+            .into())
+    }
+
+    pub fn execute(&self, query: &str) -> savvy::Result<RGlareDbExecutionOutput> {
+        Ok(GLOBAL_RUNTIME
+            .0
+            .block_on(self.inner.execute(query).evaluate())
+            .map_err(RGlareDbError::from)?
+            .into())
+    }
 }
