@@ -20,8 +20,9 @@ NULL
 }
 
 
-sql <- function(query) {
-  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_sql__impl, query))
+sql <- function(query, connection = NULL) {
+  connection <- .savvy_extract_ptr(connection, "RGlareDbConnection")
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_sql__impl, query, connection))
 }
 
 

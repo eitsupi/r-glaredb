@@ -34,8 +34,8 @@ SEXP handle_result(SEXP res_) {
     return (SEXP)res;
 }
 
-SEXP savvy_sql__impl(SEXP query) {
-    SEXP res = savvy_sql__ffi(query);
+SEXP savvy_sql__impl(SEXP query, SEXP connection) {
+    SEXP res = savvy_sql__ffi(query, connection);
     return handle_result(res);
 }
 
@@ -57,7 +57,7 @@ SEXP savvy_RGlareDbExecutionOutput_export_stream__impl(SEXP self__, SEXP stream_
 
 
 static const R_CallMethodDef CallEntries[] = {
-    {"savvy_sql__impl", (DL_FUNC) &savvy_sql__impl, 1},
+    {"savvy_sql__impl", (DL_FUNC) &savvy_sql__impl, 2},
     {"savvy_connect__impl", (DL_FUNC) &savvy_connect__impl, 6},
     {"savvy_RGlareDbConnection_sql__impl", (DL_FUNC) &savvy_RGlareDbConnection_sql__impl, 2},
     {"savvy_RGlareDbExecutionOutput_export_stream__impl", (DL_FUNC) &savvy_RGlareDbExecutionOutput_export_stream__impl, 2},

@@ -1,4 +1,4 @@
-SEXP savvy_sql__ffi(SEXP query);
+SEXP savvy_sql__ffi(SEXP query, SEXP connection);
 SEXP savvy_connect__ffi(SEXP cloud_addr, SEXP disable_tls, SEXP data_dir_or_cloud_url, SEXP spill_path, SEXP location, SEXP env);
 
 // methods and associated functions for RGlareDbConnection

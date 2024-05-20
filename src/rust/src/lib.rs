@@ -9,6 +9,10 @@ use execution::RGlareDbExecutionOutput;
 use savvy::savvy;
 
 #[savvy]
-pub fn sql(query: &str) -> savvy::Result<RGlareDbExecutionOutput> {
-    RGlareDbConnection::default_in_memory()?.sql(query)
+pub fn sql(query: &str, connection: Option<RGlareDbConnection>) -> savvy::Result<RGlareDbExecutionOutput> {
+    if let Some(connection) = connection {
+        connection.sql(query)
+    } else {
+        RGlareDbConnection::default_in_memory()?.sql(query)
+    }
 }
