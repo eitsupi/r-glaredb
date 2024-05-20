@@ -4,10 +4,13 @@
 \alias{glaredb_sql}
 \title{Run a SQL query against the default in-memory GlareDB database}
 \usage{
-glaredb_sql(query)
+glaredb_sql(query, connection = NULL)
 }
 \arguments{
 \item{query}{A character of the SQL query to run}
+
+\item{connection}{A \link[=glaredb_connect]{GlareDB connection object} or \code{NULL}.
+If \code{NULL}, the default in-memory database is used.}
 }
 \value{
 GlareDB execusion output
