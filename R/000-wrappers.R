@@ -113,6 +113,29 @@ RGlareDbExecutionOutput <- new.env(parent = emptyenv())
 
 
 
+### wrapper functions for RGlareDbMemTable
+
+
+.savvy_wrap_RGlareDbMemTable <- function(ptr) {
+  e <- new.env(parent = emptyenv())
+  e$.ptr <- ptr
+  
+  
+  class(e) <- "RGlareDbMemTable"
+  e
+}
+
+
+
+RGlareDbMemTable <- new.env(parent = emptyenv())
+
+### associated functions for RGlareDbMemTable
+
+RGlareDbMemTable$import_stream <- function(stream_ptr) {
+  .savvy_wrap_RGlareDbMemTable(.Call(savvy_RGlareDbMemTable_import_stream__impl, stream_ptr))
+}
+
+
 ### wrapper functions for RGlareDbTokioRuntime
 
 

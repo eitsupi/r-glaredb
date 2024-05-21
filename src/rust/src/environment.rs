@@ -1,4 +1,5 @@
 use crate::execution::RGlareDbExecutionOutput;
+use crate::memtable::RGlareDbMemTable;
 use arrow::array::RecordBatchReader;
 use arrow::ffi_stream::{ArrowArrayStreamReader, FFI_ArrowArrayStream};
 use datafusion::arrow::array::RecordBatch;
@@ -63,6 +64,17 @@ impl EnvironmentReader for REnvironmentReader {
             let exec = <&RGlareDbExecutionOutput>::try_from(sexp).unwrap().clone();
 
             return Ok(Some(Arc::new(exec) as Arc<dyn TableProvider>));
+        }
+
+        if classes.iter().any(|&s| s == "RGlareDbMemTable") {
+            let sexp = EnvironmentSexp::try_from(obj)
+                .unwrap()
+                .get(".ptr")
+                .expect("RGlareDbMemTable should have .ptr")
+                .ok_or("Not found")?;
+            let table = <&RGlareDbMemTable>::try_from(sexp).unwrap().inner.clone();
+
+            return Ok(Some(table as Arc<dyn TableProvider>));
         }
 
         if classes

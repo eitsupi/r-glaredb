@@ -3,6 +3,7 @@ mod connection;
 mod environment;
 mod error;
 mod execution;
+mod memtable;
 mod runtime;
 use connection::RGlareDbConnection;
 use execution::RGlareDbExecutionOutput;

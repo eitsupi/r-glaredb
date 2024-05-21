@@ -79,6 +79,11 @@ SEXP savvy_RGlareDbExecutionOutput_export_stream__impl(SEXP self__, SEXP stream_
     return handle_result(res);
 }
 
+SEXP savvy_RGlareDbMemTable_import_stream__impl(SEXP stream_ptr) {
+    SEXP res = savvy_RGlareDbMemTable_import_stream__ffi(stream_ptr);
+    return handle_result(res);
+}
+
 
 
 static const R_CallMethodDef CallEntries[] = {
@@ -91,6 +96,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"savvy_RGlareDbConnection_prql__impl", (DL_FUNC) &savvy_RGlareDbConnection_prql__impl, 2},
     {"savvy_RGlareDbConnection_execute__impl", (DL_FUNC) &savvy_RGlareDbConnection_execute__impl, 2},
     {"savvy_RGlareDbExecutionOutput_export_stream__impl", (DL_FUNC) &savvy_RGlareDbExecutionOutput_export_stream__impl, 2},
+    {"savvy_RGlareDbMemTable_import_stream__impl", (DL_FUNC) &savvy_RGlareDbMemTable_import_stream__impl, 1},
 
     {NULL, NULL, 0}
 };
