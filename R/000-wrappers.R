@@ -113,6 +113,34 @@ RGlareDbExecutionOutput <- new.env(parent = emptyenv())
 
 
 
+### wrapper functions for RGlareDbTable
+
+RGlareDbTable_export_stream <- function(self) {
+  function(stream_ptr) {
+  invisible(.Call(savvy_RGlareDbTable_export_stream__impl, self, stream_ptr))
+  }
+}
+
+.savvy_wrap_RGlareDbTable <- function(ptr) {
+  e <- new.env(parent = emptyenv())
+  e$.ptr <- ptr
+    e$export_stream <- RGlareDbTable_export_stream(ptr)
+  
+  class(e) <- "RGlareDbTable"
+  e
+}
+
+
+
+RGlareDbTable <- new.env(parent = emptyenv())
+
+### associated functions for RGlareDbTable
+
+RGlareDbTable$import_stream <- function(stream_ptr) {
+  .savvy_wrap_RGlareDbTable(.Call(savvy_RGlareDbTable_import_stream__impl, stream_ptr))
+}
+
+
 ### wrapper functions for RGlareDbTokioRuntime
 
 

@@ -1,7 +1,5 @@
 use crate::execution::RGlareDbExecutionOutput;
-use arrow::array::RecordBatchReader;
-use arrow::ffi_stream::{ArrowArrayStreamReader, FFI_ArrowArrayStream};
-use datafusion::arrow::array::RecordBatch;
+use crate::table::RGlareDbTable;
 use datafusion::datasource::{MemTable, TableProvider};
 use savvy::ffi::SEXP;
 use savvy::protect::{insert_to_preserved_list, release_from_preserved_list};
@@ -65,28 +63,39 @@ impl EnvironmentReader for REnvironmentReader {
             return Ok(Some(Arc::new(exec) as Arc<dyn TableProvider>));
         }
 
+        if classes.iter().any(|&s| s == "RGlareDbTable") {
+            let sexp = EnvironmentSexp::try_from(obj)
+                .unwrap()
+                .get(".ptr")
+                .expect("RGlareDbTable should have .ptr")
+                .ok_or("Not found")?;
+            let table: MemTable = <&RGlareDbTable>::try_from(sexp).unwrap().try_into()?;
+
+            return Ok(Some(Arc::new(table) as Arc<dyn TableProvider>));
+        }
+
         if classes
             .iter()
             .any(|&s| s == "RPolarsDataFrame" || s == "ArrowTabular")
         {
             let func = savvy::FunctionSexp::try_from(savvy::Sexp(
-                savvy::eval_parse_text(
-                    r#"utils::getFromNamespace("as_nanoarrow_array_stream", "nanoarrow")"#,
-                )
-                .unwrap()
-                .inner(),
+                savvy::eval_parse_text(r#"utils::getFromNamespace("as_glaredb_table", "glaredb")"#)
+                    .unwrap()
+                    .inner(),
             ))
             .unwrap();
             let mut args = savvy::FunctionArgs::new();
             let _ = args.add("x", obj);
-            let sexp = Sexp::try_from(func.call(args).unwrap()).unwrap();
-            let stream_ptr = savvy::ExternalPointerSexp::try_from(sexp).unwrap();
-            let stream = unsafe { stream_ptr.cast_mut_unchecked::<FFI_ArrowArrayStream>() };
-            let stream_reader = unsafe { ArrowArrayStreamReader::from_raw(stream).unwrap() };
-            let schema = stream_reader.schema();
-            let batches =
-                stream_reader.collect::<Result<Vec<RecordBatch>, arrow::error::ArrowError>>()?;
-            let table = MemTable::try_new(schema, vec![batches])?;
+            let wrapper_sexp: EnvironmentSexp = Sexp::try_from(func.call(args).unwrap())
+                .unwrap()
+                .try_into()
+                .unwrap();
+            let sexp = wrapper_sexp
+                .get(".ptr")
+                .expect("RGlareDbTable should have .ptr")
+                .ok_or("Not found")?;
+
+            let table: MemTable = <&RGlareDbTable>::try_from(sexp).unwrap().try_into()?;
 
             return Ok(Some(Arc::new(table) as Arc<dyn TableProvider>));
         }

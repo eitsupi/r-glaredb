@@ -4,6 +4,7 @@ mod environment;
 mod error;
 mod execution;
 mod runtime;
+mod table;
 use connection::RGlareDbConnection;
 use execution::RGlareDbExecutionOutput;
 use savvy::savvy;
