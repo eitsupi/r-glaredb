@@ -1,6 +1,8 @@
 #' Create a GlareDB table
 #'
+#' TODO
 #' @export
+#' @aliases RGlareDbTable
 #' @param x An object to be coerced to a GlareDB table.
 #' @param ... Additional arguments passed to methods.
 #' @return A GlareDB table.
@@ -15,6 +17,7 @@ as_glaredb_table <- function(x, ...) {
 }
 
 
+#' @rdname as_glaredb_table
 #' @export
 as_glaredb_table.default <- function(x, ...) {
   as_nanoarrow_array_stream(x, ...) |>
@@ -22,6 +25,7 @@ as_glaredb_table.default <- function(x, ...) {
 }
 
 
+#' @rdname as_glaredb_table
 #' @export
 as_glaredb_table.nanoarrow_array_stream <- function(x, ...) {
   if (!identical(nanoarrow_schema_parse(x$get_schema())$type, "struct")) {

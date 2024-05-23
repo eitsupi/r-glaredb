@@ -2,9 +2,16 @@
 % Please edit documentation in R/table.R
 \name{as_glaredb_table}
 \alias{as_glaredb_table}
+\alias{RGlareDbTable}
+\alias{as_glaredb_table.default}
+\alias{as_glaredb_table.nanoarrow_array_stream}
 \title{Create a GlareDB table}
 \usage{
 as_glaredb_table(x, ...)
+
+\method{as_glaredb_table}{default}(x, ...)
+
+\method{as_glaredb_table}{nanoarrow_array_stream}(x, ...)
 }
 \arguments{
 \item{x}{An object to be coerced to a GlareDB table.}
@@ -15,7 +22,7 @@ as_glaredb_table(x, ...)
 A GlareDB table.
 }
 \description{
-Create a GlareDB table
+TODO
 }
 \examples{
 con <- glaredb_connect()
