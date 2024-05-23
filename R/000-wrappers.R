@@ -113,26 +113,31 @@ RGlareDbExecutionOutput <- new.env(parent = emptyenv())
 
 
 
-### wrapper functions for RGlareDbMemTable
+### wrapper functions for RGlareDbTable
 
+RGlareDbTable_export_stream <- function(self) {
+  function(stream_ptr) {
+  invisible(.Call(savvy_RGlareDbTable_export_stream__impl, self, stream_ptr))
+  }
+}
 
-.savvy_wrap_RGlareDbMemTable <- function(ptr) {
+.savvy_wrap_RGlareDbTable <- function(ptr) {
   e <- new.env(parent = emptyenv())
   e$.ptr <- ptr
+    e$export_stream <- RGlareDbTable_export_stream(ptr)
   
-  
-  class(e) <- "RGlareDbMemTable"
+  class(e) <- "RGlareDbTable"
   e
 }
 
 
 
-RGlareDbMemTable <- new.env(parent = emptyenv())
+RGlareDbTable <- new.env(parent = emptyenv())
 
-### associated functions for RGlareDbMemTable
+### associated functions for RGlareDbTable
 
-RGlareDbMemTable$import_stream <- function(stream_ptr) {
-  .savvy_wrap_RGlareDbMemTable(.Call(savvy_RGlareDbMemTable_import_stream__impl, stream_ptr))
+RGlareDbTable$import_stream <- function(stream_ptr) {
+  .savvy_wrap_RGlareDbTable(.Call(savvy_RGlareDbTable_import_stream__impl, stream_ptr))
 }
 
 

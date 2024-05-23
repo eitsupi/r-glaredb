@@ -12,7 +12,8 @@ SEXP savvy_RGlareDbConnection_execute__ffi(SEXP self__, SEXP query);
 // methods and associated functions for RGlareDbExecutionOutput
 SEXP savvy_RGlareDbExecutionOutput_export_stream__ffi(SEXP self__, SEXP stream_ptr);
 
-// methods and associated functions for RGlareDbMemTable
-SEXP savvy_RGlareDbMemTable_import_stream__ffi(SEXP stream_ptr);
+// methods and associated functions for RGlareDbTable
+SEXP savvy_RGlareDbTable_import_stream__ffi(SEXP stream_ptr);
+SEXP savvy_RGlareDbTable_export_stream__ffi(SEXP self__, SEXP stream_ptr);
 
 // methods and associated functions for RGlareDbTokioRuntime
