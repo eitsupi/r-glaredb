@@ -1,3 +1,9 @@
+#' @export
+print.RGlareDbTable <- function(x, ...) {
+  x$print()
+  invisible(x)
+}
+
 #' Create a GlareDB table
 #'
 #' TODO
@@ -25,6 +31,12 @@ as_glaredb_table.default <- function(x, ...) {
 }
 
 
+#' @export
+as_glaredb_table.RGlareDbTable <- function(x, ...) {
+  x
+}
+
+
 #' @rdname as_glaredb_table
 #' @export
 as_glaredb_table.nanoarrow_array_stream <- function(x, ...) {
@@ -36,9 +48,8 @@ as_glaredb_table.nanoarrow_array_stream <- function(x, ...) {
 }
 
 
+#' @rdname as_glaredb_table
 #' @export
-as_nanoarrow_array_stream.RGlareDbTable <- as_nanoarrow_array_stream.RGlareDbExecutionOutput
-
-
-#' @export
-as.data.frame.RGlareDbTable <- as.data.frame.RGlareDbExecutionOutput
+as_glaredb_table.RGlareDbExecutionOutput <- function(x, ...) {
+  x$to_table()
+}

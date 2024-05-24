@@ -5,6 +5,7 @@
 \alias{RGlareDbTable}
 \alias{as_glaredb_table.default}
 \alias{as_glaredb_table.nanoarrow_array_stream}
+\alias{as_glaredb_table.RGlareDbExecutionOutput}
 \title{Create a GlareDB table}
 \usage{
 as_glaredb_table(x, ...)
@@ -12,6 +13,8 @@ as_glaredb_table(x, ...)
 \method{as_glaredb_table}{default}(x, ...)
 
 \method{as_glaredb_table}{nanoarrow_array_stream}(x, ...)
+
+\method{as_glaredb_table}{RGlareDbExecutionOutput}(x, ...)
 }
 \arguments{
 \item{x}{An object to be coerced to a GlareDB table.}

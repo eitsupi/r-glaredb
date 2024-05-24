@@ -90,16 +90,16 @@ RGlareDbConnection$default_in_memory <- function() {
 
 ### wrapper functions for RGlareDbExecutionOutput
 
-RGlareDbExecutionOutput_export_stream <- function(self) {
-  function(stream_ptr) {
-  invisible(.Call(savvy_RGlareDbExecutionOutput_export_stream__impl, self, stream_ptr))
+RGlareDbExecutionOutput_to_table <- function(self) {
+  function() {
+    .savvy_wrap_RGlareDbTable(.Call(savvy_RGlareDbExecutionOutput_to_table__impl, self))
   }
 }
 
 .savvy_wrap_RGlareDbExecutionOutput <- function(ptr) {
   e <- new.env(parent = emptyenv())
   e$.ptr <- ptr
-    e$export_stream <- RGlareDbExecutionOutput_export_stream(ptr)
+    e$to_table <- RGlareDbExecutionOutput_to_table(ptr)
   
   class(e) <- "RGlareDbExecutionOutput"
   e
@@ -115,6 +115,12 @@ RGlareDbExecutionOutput <- new.env(parent = emptyenv())
 
 ### wrapper functions for RGlareDbTable
 
+RGlareDbTable_print <- function(self) {
+  function() {
+  invisible(.Call(savvy_RGlareDbTable_print__impl, self))
+  }
+}
+
 RGlareDbTable_export_stream <- function(self) {
   function(stream_ptr) {
   invisible(.Call(savvy_RGlareDbTable_export_stream__impl, self, stream_ptr))
@@ -124,7 +130,8 @@ RGlareDbTable_export_stream <- function(self) {
 .savvy_wrap_RGlareDbTable <- function(ptr) {
   e <- new.env(parent = emptyenv())
   e$.ptr <- ptr
-    e$export_stream <- RGlareDbTable_export_stream(ptr)
+    e$print <- RGlareDbTable_print(ptr)
+  e$export_stream <- RGlareDbTable_export_stream(ptr)
   
   class(e) <- "RGlareDbTable"
   e
