@@ -19,10 +19,11 @@ Suggests:
     polars,
     patrick,
     rmarkdown,
-    testthat
+    testthat (>= 3.0.0)
 Config/Needs/dev:
     devtools,
     lintr,
     styler
 Config/Needs/website:
     pkgdown
+Config/testthat/edition: 3
