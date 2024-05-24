@@ -79,6 +79,7 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
           Ncpus: 2
+          extra-repositories: https://rpolars.r-universe.dev # For the polars package
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:

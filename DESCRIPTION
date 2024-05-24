@@ -13,3 +13,17 @@ RoxygenNote: 7.3.1
 SystemRequirements: Cargo (Rust's package manager), rustc, protobuf-compiler
 Imports:
     nanoarrow
+Suggests:
+    arrow,
+    knitr,
+    polars,
+    patrick,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/Needs/dev:
+    devtools,
+    lintr,
+    styler
+Config/Needs/website:
+    pkgdown
+Config/testthat/edition: 3

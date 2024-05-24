@@ -6,7 +6,8 @@
 		},
 		"ghcr.io/devcontainers-contrib/features/protoc:1": {},
 		"ghcr.io/rocker-org/devcontainer-features/r-dependent-packages": {
-			"when": "updateContent"
+			"when": "updateContent",
+			"additionalRepositories": "polars = 'https://rpolars.r-universe.dev'"
 		},
 		"ghcr.io/eitsupi/devcontainer-features/go-task:1": {}
 	},
@@ -24,6 +25,9 @@
 			"type": "volume"
 		}
 	],
+	"containerEnv": {
+		"NOT_CRAN": "true"
+	},
 	"remoteEnv": {
 		"PKG_SYSREQS": "false"
 	}
