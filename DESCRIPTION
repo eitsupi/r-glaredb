@@ -1,11 +1,13 @@
 Package: glaredb
 Title: R Bindings for 'GlareDB'
-Version: 0.0.0.9000
+Version: 0.0.1.9000
 Authors@R:
-    c(person("Tatsuya", "Shima", email = "ts1s1andn@gmail.com", role = c("aut", "cre")),
-      person("Authors of the dependency Rust crates", role = "aut",
-             comment = "see inst/AUTHORS file for details"))
-Description: TODO
+    c(person("Tatsuya", "Shima", email = "ts1s1andn@gmail.com", role = c("aut", "cre")))
+URL: https://github.com/eitsupi/r-glaredb
+BugReports: https://github.com/eitsupi/r-glaredb/issues
+Description:
+    R bindings for 'GlareDB', an analytical database based on 'Apache Arrow' and
+    'Apache DataFusion' that can connect to various data sources and execute queries.
 License: AGPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

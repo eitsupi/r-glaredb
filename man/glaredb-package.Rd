@@ -6,15 +6,18 @@
 \alias{glaredb-package}
 \title{glaredb: R Bindings for 'GlareDB'}
 \description{
-TODO
+R bindings for 'GlareDB', an analytical database based on 'Apache Arrow' and 'Apache DataFusion' that can connect to various data sources and execute queries.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/eitsupi/r-glaredb}
+  \item Report bugs at \url{https://github.com/eitsupi/r-glaredb/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: Tatsuya Shima \email{ts1s1andn@gmail.com}
-
-Authors:
-\itemize{
-  \item Authors of the dependency Rust crates (see inst/AUTHORS file for details)
-}
 
 }
 \keyword{internal}
