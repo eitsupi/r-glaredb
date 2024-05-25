@@ -54,14 +54,6 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - name: Set up R
-        # macos latest runner does't have R
-        if: runner.os == 'macOS'
-        uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
-          Ncpus: 2
-
       - uses: arduino/setup-protoc@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -91,6 +83,17 @@ jobs:
           echo 'CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc' >>"$GITHUB_ENV"
           echo 'CC=aarch64-linux-gnu-gcc' >>"$GITHUB_ENV"
 
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+          Ncpus: 2
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: any::pkgbuild, any::nanoarrow
+          dependencies: 'FALSE'
+
       - name: build lib
         env:
           NOT_CRAN: "true"
@@ -103,18 +106,10 @@ jobs:
 
           LIB_PATH="$(pwd)/rust/target/${TARGET}/release/${LIB_NAME}.a"
           ARTIFACT_NAME="${LIB_NAME}-${LIB_VERSION}-${TARGET}.tar.gz"
-          if [[ "${{ runner.os }}" == "macOS" ]]; then
-            # Rinternals header is needed
-            pushd ..
-            Rscript -e 'install.packages(c("pkgbuild", "nanoarrow"))'
-            Rscript -e 'pkgbuild::compile_dll(debug = FALSE)'
-            popd
-          else
-            pushd ..
-            bash ./configure${{ runner.os == 'Windows' && '.win' || '' }}
-            popd
-            make -f Makevars${{ runner.os == 'Windows' && '.win' || '' }} "${LIB_PATH}"
-          fi
+          # Rinternals header is needed
+          pushd ..
+          Rscript -e 'pkgbuild::compile_dll(debug = FALSE)'
+          popd
 
           tar -czf "../${ARTIFACT_NAME}" -C "rust/target/${TARGET}/release" "${LIB_NAME}.a"
           echo "ARTIFACT_NAME=${ARTIFACT_NAME}" >>"$GITHUB_ENV"
