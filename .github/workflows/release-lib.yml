@@ -40,8 +40,9 @@ jobs:
             target: x86_64-apple-darwin
           - os: macos-latest
             target: aarch64-apple-darwin
-          - os: windows-latest
-            target: x86_64-pc-windows-gnu
+          # TODO: Can't build for Windows for now
+          # - os: windows-latest
+          #   target: x86_64-pc-windows-gnu
     permissions:
       contents: read
       packages: write
@@ -118,7 +119,8 @@ jobs:
       matrix:
         os:
           - macos-latest
-          - windows-latest
+          # TODO: Can't build for Windows for now
+          # - windows-latest
           - ubuntu-20.04
         r:
           - oldrel-1
