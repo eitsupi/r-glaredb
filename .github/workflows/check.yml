@@ -52,8 +52,7 @@ jobs:
       matrix:
         config:
           - {os: macos-latest,   r: 'release'}
-          # TODO: enable windows check
-          # - {os: windows-latest, r: 'release'} # Can't build to x86_64-pc-windows-gnu target <https://github.com/aws/aws-lc-rs/issues/413>
+          - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
