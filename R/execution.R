@@ -7,7 +7,7 @@ print.RGlareDbExecutionOutput <- function(x, ...) {
 
 #' Run a query against a GlareDB database
 #' @param query A character of the query to run.
-#' - For [glaredb_sql] and [glaredb_execute], a SQL query.
+#' - For [glaredb_sql] and [glaredb_execute], an SQL query.
 #' - For [glaredb_prql], a PRQL query.
 #' @param connection A [GlareDB connection object][glaredb_connect] or `NULL`.
 #' If `NULL`, the default in-memory database is used.

@@ -28,7 +28,7 @@ print.RGlareDbTable <- function(x, ...) {
 #'     )
 #'   )
 #'
-#' # Run a SQL query against the connection,
+#' # Run an SQL query against the connection,
 #' # and convert the result to a GlareDB table
 #' glaredb_sql("SELECT * FROM dat", con) |>
 #'   as_glaredb_table()
