@@ -8,12 +8,29 @@ use std::sync::Arc;
 
 #[savvy]
 struct RGlareDbTable {
-    schema: Arc<Schema>,
-    batches: Vec<RecordBatch>,
+    pub schema: Arc<Schema>,
+    pub batches: Vec<RecordBatch>,
 }
 
 #[savvy]
 impl RGlareDbTable {
+    fn print(&self) -> savvy::Result<()> {
+        let schema = &self.schema;
+        let batches = &self.batches;
+
+        let disp = arrow_util::pretty::pretty_format_batches(
+            &schema,
+            &batches,
+            Some(terminal_util::term_width()),
+            None,
+        )
+        .map_err(|e| e.to_string())?;
+
+        savvy::r_println!("{disp}");
+
+        Ok(())
+    }
+
     pub fn import_stream(stream_ptr: savvy::Sexp) -> savvy::Result<Self> {
         let stream_reader = unsafe {
             let stream = savvy::ExternalPointerSexp::try_from(stream_ptr)?

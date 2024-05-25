@@ -1,17 +1,49 @@
+#' @export
+print.RGlareDbTable <- function(x, ...) {
+  x$print()
+  invisible(x)
+}
+
 #' Create a GlareDB table
 #'
-#' TODO
+#' A class that has a struct similar to [arrow::Table] innerly and
+#' can be converted to other classes via [nanoarrow::as_nanoarrow_array_stream()].
 #' @export
 #' @aliases RGlareDbTable
+#' @inheritParams nanoarrow::as_nanoarrow_array_stream
 #' @param x An object to be coerced to a GlareDB table.
 #' @param ... Additional arguments passed to methods.
-#' @return A GlareDB table.
+#' @return A [GlareDB table][RGlareDbTable].
 #' @examples
 #' con <- glaredb_connect()
-#' dat <- as_glaredb_table(data.frame(a = 1:3, b = letters[1:3]))
 #'
+#' # Create a GlareDB table from a data frame with a specified schema
+#' dat <- data.frame(a = 1:3, b = letters[1:3]) |>
+#'   as_glaredb_table(
+#'     schema = nanoarrow::na_struct(
+#'       list(
+#'         a = nanoarrow::na_int64(),
+#'         b = nanoarrow::na_large_string()
+#'       )
+#'     )
+#'   )
+#'
+#' # Run a SQL query against the connection,
+#' # and convert the result to a GlareDB table
 #' glaredb_sql("SELECT * FROM dat", con) |>
-#'   as.data.frame()
+#'   as_glaredb_table()
+#'
+#' # Convert the GlareDB table to an arrow Table
+#' if (requireNamespace("arrow", quietly = TRUE)) {
+#'   dat |>
+#'     arrow::as_arrow_table()
+#' }
+#'
+#' # Convert the GlareDB table to a polars DataFrame
+#' if (requireNamespace("polars", quietly = TRUE)) {
+#'   dat |>
+#'     polars::as_polars_df()
+#' }
 as_glaredb_table <- function(x, ...) {
   UseMethod("as_glaredb_table")
 }
@@ -19,9 +51,15 @@ as_glaredb_table <- function(x, ...) {
 
 #' @rdname as_glaredb_table
 #' @export
-as_glaredb_table.default <- function(x, ...) {
-  as_nanoarrow_array_stream(x, ...) |>
+as_glaredb_table.default <- function(x, ..., schema = NULL) {
+  as_nanoarrow_array_stream(x, ..., schema = schema) |>
     as_glaredb_table()
+}
+
+
+#' @export
+as_glaredb_table.RGlareDbTable <- function(x, ...) {
+  x
 }
 
 
@@ -36,9 +74,8 @@ as_glaredb_table.nanoarrow_array_stream <- function(x, ...) {
 }
 
 
+#' @rdname as_glaredb_table
 #' @export
-as_nanoarrow_array_stream.RGlareDbTable <- as_nanoarrow_array_stream.RGlareDbExecutionOutput
-
-
-#' @export
-as.data.frame.RGlareDbTable <- as.data.frame.RGlareDbExecutionOutput
+as_glaredb_table.RGlareDbExecutionOutput <- function(x, ...) {
+  x$to_table()
+}

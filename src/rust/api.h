@@ -10,9 +10,11 @@ SEXP savvy_RGlareDbConnection_prql__ffi(SEXP self__, SEXP query);
 SEXP savvy_RGlareDbConnection_execute__ffi(SEXP self__, SEXP query);
 
 // methods and associated functions for RGlareDbExecutionOutput
-SEXP savvy_RGlareDbExecutionOutput_export_stream__ffi(SEXP self__, SEXP stream_ptr);
+SEXP savvy_RGlareDbExecutionOutput_print__ffi(SEXP self__);
+SEXP savvy_RGlareDbExecutionOutput_to_table__ffi(SEXP self__);
 
 // methods and associated functions for RGlareDbTable
+SEXP savvy_RGlareDbTable_print__ffi(SEXP self__);
 SEXP savvy_RGlareDbTable_import_stream__ffi(SEXP stream_ptr);
 SEXP savvy_RGlareDbTable_export_stream__ffi(SEXP self__, SEXP stream_ptr);
 
