@@ -32,9 +32,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             target: x86_64-unknown-linux-gnu
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             target: aarch64-unknown-linux-gnu
           - os: macos-latest
             target: x86_64-apple-darwin
@@ -135,7 +135,7 @@ jobs:
           - macos-latest
           # TODO: Can't build for Windows for now
           # - windows-latest
-          - ubuntu-20.04
+          - ubuntu-22.04
         r:
           - oldrel-1
           - release
