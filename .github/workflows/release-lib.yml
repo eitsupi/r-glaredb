@@ -32,9 +32,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             target: x86_64-unknown-linux-gnu
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             target: aarch64-unknown-linux-gnu
           - os: macos-latest
             target: x86_64-apple-darwin
@@ -119,7 +119,7 @@ jobs:
         os:
           - macos-latest
           - windows-latest
-          - ubuntu-latest
+          - ubuntu-20.04
         r:
           - oldrel-1
           - release
