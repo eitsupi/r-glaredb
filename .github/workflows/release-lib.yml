@@ -95,7 +95,7 @@ jobs:
           if [[ "${{ runner.os }}" == "macOS" ]]; then
             # Rinternals header is needed
             pushd ..
-            Rscript -e 'install.packages("pkgbuild")'
+            Rscript -e 'install.packages(c("pkgbuild", "nanoarrow"))'
             Rscript -e 'pkgbuild::compile_dll()'
             popd
           else
