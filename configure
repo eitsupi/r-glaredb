@@ -1,9 +1,13 @@
 #!/usr/bin/env sh
 
 # Mostly copied from https://github.com/PRQL/prqlc-r/blob/60495ea58d91d6dd36fddd9f1b0b426e10eb3674/configure
+# and https://github.com/pola-rs/r-polars/blob/3d2a33361e6765294e3e44201b92429c28b67402/configure
 
 NOT_CRAN=${NOT_CRAN:-"false"}
 LIBR_GLAREDB_BUILD=${LIBR_GLAREDB_BUILD:-""}
+
+# Detect if this is on R-universe.
+MY_UNIVERSE=${MY_UNIVERSE:-""}
 
 LIBNAME="libr_glaredb.a"
 LIBR_GLAREDB_DEFAULT_PATH="$(pwd)/tools/${LIBNAME}"
@@ -38,6 +42,17 @@ check_cargo() {
 
 check_bin_lib() {
   if [ "${NOT_CRAN}" = "true" ] && [ -z "${LIBR_GLAREDB_BUILD}" ]; then
+    LIBR_GLAREDB_BUILD="false"
+  fi
+
+  # On R-universe, we try to download the pre-built binary from GitHub releases.
+  if [ -n "${MY_UNIVERSE}" ] && [ -z "${LIBR_GLAREDB_BUILD}" ]; then
+    echo ""
+    echo "--------------------- [SETTING FOR R-UNIVERSE] ---------------------"
+    echo "It seems that this is on R-universe <${MY_UNIVERSE}>."
+    echo "Trying to download pre-built binary."
+    echo "--------------------------------------------------------------------"
+    echo ""
     LIBR_GLAREDB_BUILD="false"
   fi
 
