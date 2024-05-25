@@ -96,7 +96,7 @@ jobs:
             # Rinternals header is needed
             pushd ..
             Rscript -e 'install.packages(c("pkgbuild", "nanoarrow"))'
-            Rscript -e 'pkgbuild::compile_dll()'
+            Rscript -e 'pkgbuild::compile_dll(debug = FALSE)'
             popd
           else
             make -f Makevars${{ runner.os == 'Windows' && '.win' || '.in' }} "${LIB_PATH}"
