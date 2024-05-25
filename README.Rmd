@@ -46,14 +46,14 @@ Use GlareDB directly in R to query and analyzer a variety of data sources, inclu
 library(glaredb)
 library(polars)
 
-df = pl$DataFrame(
+df <- pl$DataFrame(
   A = 1:5,
   fruits = c("banana", "banana", "apple", "apple", "banana"),
   B = 5:1,
   C = c("beetle", "audi", "beetle", "beetle", "beetle")
 )
 
-df2 = glaredb_sql("select * from df where fruits = 'banana'") |>
+df2 <- glaredb_sql("select * from df where fruits = 'banana'") |>
   as_polars_df()
 
 df2

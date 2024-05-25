@@ -36,14 +36,14 @@ sources, including `arrow::Table` and `polars::RPolarsDataFrame`.
 library(glaredb)
 library(polars)
 
-df = pl$DataFrame(
+df <- pl$DataFrame(
   A = 1:5,
   fruits = c("banana", "banana", "apple", "apple", "banana"),
   B = 5:1,
   C = c("beetle", "audi", "beetle", "beetle", "beetle")
 )
 
-df2 = glaredb_sql("select * from df where fruits = 'banana'") |>
+df2 <- glaredb_sql("select * from df where fruits = 'banana'") |>
   as_polars_df()
 
 df2
