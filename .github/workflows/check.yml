@@ -52,7 +52,8 @@ jobs:
       matrix:
         config:
           - {os: macos-latest,   r: 'release'}
-          - {os: windows-latest, r: 'release'}
+          # TODO: enable windows check
+          # - {os: windows-latest, r: 'release'} # Can't build to x86_64-pc-windows-gnu target <https://github.com/aws/aws-lc-rs/issues/413>
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
@@ -112,12 +113,6 @@ jobs:
         run: |
           # make sure savvy is built from source because rust-cache doesn't work well.
           (find ~/.cargo/registry/ src/rust/target -name 'savvy-*' | xargs rm -rf) || true
-
-          if [ "{{ runner.os }}" == "Windows" ]; then
-            # turn off `cc1.exe: all warnings being treated as errors`
-            export CFLAGS=-Wno-error
-            export CXXFLAGS=-Wno-error
-          fi
 
           Rscript -e 'pkgbuild::compile_dll()'
           echo "LIBR_GLAREDB_PATH=$(pwd)/src/rust/target/${{ steps.rust-target.outputs.TARGET }}/release/librglaredb.a" >>$GITHUB_ENV
