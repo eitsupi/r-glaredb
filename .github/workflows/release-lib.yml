@@ -99,7 +99,10 @@ jobs:
             Rscript -e 'pkgbuild::compile_dll(debug = FALSE)'
             popd
           else
-            make -f Makevars${{ runner.os == 'Windows' && '.win' || '.in' }} "${LIB_PATH}"
+            pushd ..
+            bash ./configure${{ runner.os == 'Windows' && '.win' || '' }}
+            popd
+            make -f Makevars${{ runner.os == 'Windows' && '.win' || '' }} "${LIB_PATH}"
           fi
 
           tar -czf "../${ARTIFACT_NAME}" -C "rust/target/${TARGET}/release" "${LIB_NAME}.a"
