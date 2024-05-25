@@ -97,9 +97,6 @@ jobs:
         run: |
           if [ "${{ runner.os }}" == "Windows" ]; then
             echo "TARGET=x86_64-pc-windows-gnu" >>"$GITHUB_OUTPUT"
-            # turn off `cc1.exe: all warnings being treated as errors`
-            echo "CFLAGS=-Wno-error" >>"$GITHUB_ENV"
-            echo "CXXFLAGS=-Wno-error" >>"$GITHUB_ENV"
           else
             echo "TARGET=$(rustc -vV | grep host | cut -d' ' -f2)" >>"$GITHUB_OUTPUT"
           fi
@@ -115,6 +112,12 @@ jobs:
         run: |
           # make sure savvy is built from source because rust-cache doesn't work well.
           (find ~/.cargo/registry/ src/rust/target -name 'savvy-*' | xargs rm -rf) || true
+
+          if [ "{{ runner.os }}" == "Windows" ]; then
+            # turn off `cc1.exe: all warnings being treated as errors`
+            export CFLAGS=-Wno-error
+            export CXXFLAGS=-Wno-error
+          fi
 
           Rscript -e 'pkgbuild::compile_dll()'
           echo "LIBR_GLAREDB_PATH=$(pwd)/src/rust/target/${{ steps.rust-target.outputs.TARGET }}/release/librglaredb.a" >>$GITHUB_ENV
