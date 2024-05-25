@@ -36,3 +36,35 @@ as.data.frame.RGlareDbExecutionOutput <- function(x, ...) {
     as_glaredb_table() |>
     as.data.frame()
 }
+
+
+# For the arrow package
+# exported in zzz.R
+as_arrow_table.RGlareDbTable <- function(x, ...) {
+  as_nanoarrow_array_stream(x) |>
+    arrow::as_arrow_table()
+}
+
+
+# exported in zzz.R
+as_arrow_table.RGlareDbExecutionOutput <- function(x, ...) {
+  x |>
+    as_glaredb_table() |>
+    as_arrow_table.RGlareDbTable()
+}
+
+
+# For the polars package
+# exported in zzz.R
+as_polars_df.RGlareDbTable <- function(x, ...) {
+  as_nanoarrow_array_stream(x) |>
+    polars::as_polars_df()
+}
+
+
+# exported in zzz.R
+as_polars_df.RGlareDbExecutionOutput <- function(x, ...) {
+  x |>
+    as_glaredb_table() |>
+    as_polars_df.RGlareDbTable()
+}
