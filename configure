@@ -55,7 +55,7 @@ check_bin_lib() {
     echo "The library was found at <${LIBR_GLAREDB_PATH}>. No need to build it."
     echo "--------------------------------------------------------------------"
     echo ""
-    sed -e "s|@RUST_TARGET@||" src/Makevars.in >src/Makevars
+    sed -e "s|@TARGET@||" src/Makevars.in >src/Makevars
     if [ "${LIBR_GLAREDB_PATH}" != "${LIBR_GLAREDB_DEFAULT_PATH}" ]; then
       echo ""
       echo "------------------------ [COPYING BINARY] ------------------------"
@@ -74,7 +74,7 @@ check_bin_lib() {
     echo "No need to build it."
     echo "--------------------------------------------------------------------"
     echo ""
-    sed -e "s|@RUST_TARGET@||" src/Makevars.in >src/Makevars
+    sed -e "s|@TARGET@||" src/Makevars.in >src/Makevars
     exit 0
   elif [ "${LIBR_GLAREDB_BUILD}" = "false" ]; then
     echo ""
@@ -115,4 +115,4 @@ else
 fi
 
 TARGET="${TARGET:-${HOST_TRIPLE}}"
-sed -e "s/@TARGET@/${TARGET}/" src/Makevars.in >src/Makevars
+sed -e "s|@TARGET@|${TARGET}|" src/Makevars.in >src/Makevars
