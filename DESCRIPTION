@@ -21,9 +21,17 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Config/Needs/dev:
+    RcppTOML,
     devtools,
+    desc,
+    dplyr,
+    fs,
+    gert,
+    glue,
     lintr,
-    styler
+    readr,
+    styler,
+    stringr
 Config/Needs/website:
     pkgdown
 Config/testthat/edition: 3
