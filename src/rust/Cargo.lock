@@ -6029,14 +6029,13 @@ dependencies = [
 
 [[package]]
 name = "r-glaredb"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "anyhow",
  "arrow",
  "arrow_util",
  "async-trait",
  "datafusion",
- "futures",
  "glaredb",
  "lzma-sys",
  "metastore",
@@ -6046,8 +6045,6 @@ dependencies = [
  "terminal_util",
  "thiserror",
  "tokio",
- "url",
- "uuid",
 ]
 
 [[package]]
