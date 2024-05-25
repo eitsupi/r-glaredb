@@ -19,16 +19,11 @@ async-trait = "0.1.80"
 futures = "0.3.30"
 uuid = "1.8.0"
 once_cell = "1.19.0"
-glaredb = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
-ioutil = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
-sqlexec = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
-metastore = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
-telemetry = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
-pgsrv = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
-pgrepr = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
-datafusion_ext = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
-arrow_util = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
-terminal_util = { git = "https://github.com/GlareDB/glaredb", rev = "f71c2f0ad220ac54c84724330224f43c860bffb9" }
+glaredb = { git = "https://github.com/GlareDB/glaredb", rev = "c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f" }
+sqlexec = { git = "https://github.com/GlareDB/glaredb", rev = "c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f" }
+metastore = { git = "https://github.com/GlareDB/glaredb", rev = "c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f" }
+arrow_util = { git = "https://github.com/GlareDB/glaredb", rev = "c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f" }
+terminal_util = { git = "https://github.com/GlareDB/glaredb", rev = "c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f" }
 
 # Prevent dynamic linking of lzma, which comes from datafusion
 lzma-sys = { version = "*", features = ["static"] }
