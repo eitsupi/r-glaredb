@@ -97,6 +97,9 @@ jobs:
         run: |
           if [ "${{ runner.os }}" == "Windows" ]; then
             echo "TARGET=x86_64-pc-windows-gnu" >>"$GITHUB_OUTPUT"
+            # turn off `cc1.exe: all warnings being treated as errors`
+            echo "CFLAGS=-Wno-error" >>"$GITHUB_ENV"
+            echo "CXXFLAGS=-Wno-error" >>"$GITHUB_ENV"
           else
             echo "TARGET=$(rustc -vV | grep host | cut -d' ' -f2)" >>"$GITHUB_OUTPUT"
           fi
