@@ -6,7 +6,8 @@ print.RGlareDbTable <- function(x, ...) {
 
 #' Create a GlareDB table
 #'
-#' TODO
+#' A class that has a struct similar to [arrow::Table] innerly and
+#' can be converted to other classes via [nanoarrow::as_nanoarrow_array_stream()].
 #' @export
 #' @aliases RGlareDbTable
 #' @param x An object to be coerced to a GlareDB table.
@@ -17,7 +18,7 @@ print.RGlareDbTable <- function(x, ...) {
 #' dat <- as_glaredb_table(data.frame(a = 1:3, b = letters[1:3]))
 #'
 #' glaredb_sql("SELECT * FROM dat", con) |>
-#'   as.data.frame()
+#'   as_glaredb_table()
 as_glaredb_table <- function(x, ...) {
   UseMethod("as_glaredb_table")
 }

@@ -25,12 +25,13 @@ as_glaredb_table(x, ...)
 A GlareDB table.
 }
 \description{
-TODO
+A class that has a struct similar to \link[arrow:Table-class]{arrow::Table} innerly and
+can be converted to other classes via \code{\link[nanoarrow:as_nanoarrow_array_stream]{nanoarrow::as_nanoarrow_array_stream()}}.
 }
 \examples{
 con <- glaredb_connect()
 dat <- as_glaredb_table(data.frame(a = 1:3, b = letters[1:3]))
 
 glaredb_sql("SELECT * FROM dat", con) |>
-  as.data.frame()
+  as_glaredb_table()
 }
