@@ -48,6 +48,10 @@ jobs:
       packages: write
 
     steps:
+      - name: more space
+        if: runner.os == 'Linux'
+        uses: jlumbroso/free-disk-space@v1.3.1
+
       - uses: actions/checkout@v4
 
       - name: Set up R
@@ -57,6 +61,13 @@ jobs:
         with:
           use-public-rspm: true
           Ncpus: 2
+
+      - uses: arduino/setup-protoc@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: ilammy/setup-nasm@v1
+        if: runner.os == 'Windows'
 
       - name: prep Rust
         working-directory: src/rust
