@@ -83,7 +83,7 @@ jobs:
       - name: build lib
         env:
           NOT_CRAN: "true"
-          DEBUG: "false"
+          DEBUG: "" # TODO: allow set to `false`
           TARGET: ${{ matrix.target }}
         working-directory: src
         run: |
