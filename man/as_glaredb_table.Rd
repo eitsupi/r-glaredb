@@ -10,7 +10,7 @@
 \usage{
 as_glaredb_table(x, ...)
 
-\method{as_glaredb_table}{default}(x, ...)
+\method{as_glaredb_table}{default}(x, ..., schema = NULL)
 
 \method{as_glaredb_table}{nanoarrow_array_stream}(x, ...)
 
@@ -20,9 +20,12 @@ as_glaredb_table(x, ...)
 \item{x}{An object to be coerced to a GlareDB table.}
 
 \item{...}{Additional arguments passed to methods.}
+
+\item{schema}{An optional schema used to enforce conversion to a particular
+type. Defaults to \code{\link[nanoarrow:infer_nanoarrow_schema]{infer_nanoarrow_schema()}}.}
 }
 \value{
-A GlareDB table.
+A \link[=RGlareDbTable]{GlareDB table}.
 }
 \description{
 A class that has a struct similar to \link[arrow:Table-class]{arrow::Table} innerly and
@@ -30,8 +33,32 @@ can be converted to other classes via \code{\link[nanoarrow:as_nanoarrow_array_s
 }
 \examples{
 con <- glaredb_connect()
-dat <- as_glaredb_table(data.frame(a = 1:3, b = letters[1:3]))
 
+# Create a GlareDB table from a data frame with a specified schema
+dat <- data.frame(a = 1:3, b = letters[1:3]) |>
+  as_glaredb_table(
+    schema = nanoarrow::na_struct(
+      list(
+        a = nanoarrow::na_int64(),
+        b = nanoarrow::na_large_string()
+      )
+    )
+  )
+
+# Run a SQL query against the connection,
+# and convert the result to a GlareDB table
 glaredb_sql("SELECT * FROM dat", con) |>
   as_glaredb_table()
+
+# Convert the GlareDB table to an arrow Table
+if (requireNamespace("arrow", quietly = TRUE)) {
+  dat |>
+    arrow::as_arrow_table()
+}
+
+# Convert the GlareDB table to a polars DataFrame
+if (requireNamespace("polars", quietly = TRUE)) {
+  dat |>
+    polars::as_polars_df()
+}
 }
