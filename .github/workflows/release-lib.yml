@@ -91,6 +91,7 @@ jobs:
       - name: build lib
         env:
           NOT_CRAN: "true"
+          LIBR_GLAREDB_BUILD: "true"
           DEBUG: "" # TODO: allow set to `false`
           TARGET: ${{ matrix.target }}
         working-directory: src
