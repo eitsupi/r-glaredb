@@ -90,6 +90,12 @@ RGlareDbConnection$default_in_memory <- function() {
 
 ### wrapper functions for RGlareDbExecutionOutput
 
+RGlareDbExecutionOutput_print <- function(self) {
+  function() {
+  invisible(.Call(savvy_RGlareDbExecutionOutput_print__impl, self))
+  }
+}
+
 RGlareDbExecutionOutput_to_table <- function(self) {
   function() {
     .savvy_wrap_RGlareDbTable(.Call(savvy_RGlareDbExecutionOutput_to_table__impl, self))
@@ -99,7 +105,8 @@ RGlareDbExecutionOutput_to_table <- function(self) {
 .savvy_wrap_RGlareDbExecutionOutput <- function(ptr) {
   e <- new.env(parent = emptyenv())
   e$.ptr <- ptr
-    e$to_table <- RGlareDbExecutionOutput_to_table(ptr)
+    e$print <- RGlareDbExecutionOutput_print(ptr)
+  e$to_table <- RGlareDbExecutionOutput_to_table(ptr)
   
   class(e) <- "RGlareDbExecutionOutput"
   e

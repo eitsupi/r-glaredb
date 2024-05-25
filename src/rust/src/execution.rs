@@ -32,6 +32,11 @@ impl From<glaredb::Operation> for RGlareDbExecutionOutput {
 
 #[savvy]
 impl RGlareDbExecutionOutput {
+    fn print(&self) -> savvy::Result<()> {
+        savvy::r_println!("RGlareDbExecution{:#?}", self.op);
+        Ok(())
+    }
+
     fn to_table(&self) -> savvy::Result<RGlareDbTable> {
         Ok(self.into())
     }
