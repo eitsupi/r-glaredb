@@ -11,7 +11,7 @@ crate-type = ["staticlib"]
 savvy = "0.6.4"
 datafusion = { version = "36.0.0", features = ["avro"] }
 tokio = { version = "1", features = ["full"] }
-arrow = { version = "50.0.0", features = ["ffi"] }
+arrow = { version = "51.0.0", features = ["ffi"] }
 thiserror = "1.0"
 anyhow = "1.0.83"
 async-trait = "0.1.80"
