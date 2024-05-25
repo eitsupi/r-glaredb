@@ -45,7 +45,7 @@ dat <- data.frame(a = 1:3, b = letters[1:3]) |>
     )
   )
 
-# Run a SQL query against the connection,
+# Run an SQL query against the connection,
 # and convert the result to a GlareDB table
 glaredb_sql("SELECT * FROM dat", con) |>
   as_glaredb_table()

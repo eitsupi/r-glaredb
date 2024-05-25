@@ -15,7 +15,7 @@ glaredb_execute(query, connection = NULL)
 \arguments{
 \item{query}{A character of the query to run.
 \itemize{
-\item For \link{glaredb_sql} and \link{glaredb_execute}, a SQL query.
+\item For \link{glaredb_sql} and \link{glaredb_execute}, an SQL query.
 \item For \link{glaredb_prql}, a PRQL query.
 }}
 
