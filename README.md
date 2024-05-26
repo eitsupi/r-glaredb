@@ -17,8 +17,8 @@ learn more.
 ## Installation
 
 This package can be installed from
-[R-universe](https://prql.r-universe.dev/prqlr). If available, a binary
-package will be installed.
+[R-universe](https://eitsupi.r-universe.dev/glaredb). If available, a
+binary package will be installed.
 
 **Currently, Windows is not supported. Please use WSL2.**
 
