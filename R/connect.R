@@ -7,6 +7,7 @@
 #' @param disable_tls `TRUE` or `FALSE` to indicating whether to disable TLS.
 #' @param cloud_addr A character of a GlareDB cloud URL.
 #' @param location TODO
+#' @param storage_options Named character vector of storage options or `NULL` (default).
 #' @param env TODO
 #' @return GlareDB connection object
 #' @export
@@ -22,6 +23,7 @@ glaredb_connect <- function(
     disable_tls = FALSE,
     cloud_addr = "https://console.glaredb.com",
     location = NULL,
+    storage_options = NULL,
     env = parent.frame()) {
   connect(
     cloud_addr = cloud_addr,
@@ -29,6 +31,7 @@ glaredb_connect <- function(
     data_dir_or_cloud_url = data_dir_or_cloud_url,
     spill_path = spill_path,
     location = location,
+    storage_options = storage_options,
     env = env
   )
 }

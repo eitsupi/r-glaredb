@@ -1,7 +1,7 @@
 SEXP savvy_sql__ffi(SEXP query, SEXP connection);
 SEXP savvy_prql__ffi(SEXP query, SEXP connection);
 SEXP savvy_execute__ffi(SEXP query, SEXP connection);
-SEXP savvy_connect__ffi(SEXP cloud_addr, SEXP disable_tls, SEXP data_dir_or_cloud_url, SEXP spill_path, SEXP location, SEXP env);
+SEXP savvy_connect__ffi(SEXP cloud_addr, SEXP disable_tls, SEXP data_dir_or_cloud_url, SEXP spill_path, SEXP location, SEXP storage_options, SEXP env);
 
 // methods and associated functions for RGlareDbConnection
 SEXP savvy_RGlareDbConnection_default_in_memory__ffi(void);
