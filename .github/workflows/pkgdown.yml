@@ -49,6 +49,33 @@ jobs:
           Ncpus: "2"
           extra-repositories: https://rpolars.r-universe.dev # For the polars package
 
+      - uses: arduino/setup-protoc@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set rust target
+        id: rust-target
+        run: |
+          echo "TARGET=$(rustc -vV | grep host | cut -d' ' -f2)" >>"$GITHUB_OUTPUT"
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "src/rust -> target"
+          shared-key: ${{ steps.rust-target.outputs.TARGET }}
+
+      - name: Build lib
+        env:
+          NOT_CRAN: "true"
+        run: |
+          if [[ ! -f "tools/lib-sums.tsv" ]]; then
+            # make sure savvy is built from source because rust-cache doesn't work well.
+            (find ~/.cargo/registry/ src/rust/target -name 'savvy-*' | xargs rm -rf) || true
+
+            Rscript -e 'install.packages(c("pkgbuild", "nanoarrow"))'
+            Rscript -e 'pkgbuild::compile_dll()'
+            echo "LIBR_GLAREDB_PATH=$(pwd)/src/rust/target/${{ steps.rust-target.outputs.TARGET }}/debug/libr_glaredb.a" >>$GITHUB_ENV
+          fi
+
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: "src/rust -> target"
@@ -56,13 +83,16 @@ jobs:
           save-if: "false"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
+        env:
+          LIBR_GLAREDB_BUILD: "false"
         with:
-          extra-packages: any::pkgdown, local::.
+          extra-packages: any::pkgdown
           needs: website
 
       - name: Build site
-        shell: Rscript {0}
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        run: |
+          R CMD INSTALL --no-multiarch --with-keep.source .
+          Rscript -e 'pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)'
 
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'
