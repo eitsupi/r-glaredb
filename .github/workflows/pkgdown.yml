@@ -67,7 +67,7 @@ jobs:
         env:
           NOT_CRAN: "true"
         run: |
-          if [[ ! -f "tools/lib-sums.tsv" ]]
+          if [[ ! -f "tools/lib-sums.tsv" ]]; then
             # make sure savvy is built from source because rust-cache doesn't work well.
             (find ~/.cargo/registry/ src/rust/target -name 'savvy-*' | xargs rm -rf) || true
 
