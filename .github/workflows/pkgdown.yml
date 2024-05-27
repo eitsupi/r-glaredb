@@ -71,7 +71,7 @@ jobs:
             # make sure savvy is built from source because rust-cache doesn't work well.
             (find ~/.cargo/registry/ src/rust/target -name 'savvy-*' | xargs rm -rf) || true
 
-            Rscript -e 'install.packages("pkgbuild")'
+            Rscript -e 'install.packages(c("pkgbuild", "nanoarrow"))'
             Rscript -e 'pkgbuild::compile_dll()'
             echo "LIBR_GLAREDB_PATH=$(pwd)/src/rust/target/${{ steps.rust-target.outputs.TARGET }}/debug/libr_glaredb.a" >>$GITHUB_ENV
           fi
