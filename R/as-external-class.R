@@ -9,7 +9,7 @@ as_nanoarrow_array_stream.RGlareDbTable <- function(x, ..., schema = NULL) {
   }
 
   stream <- nanoarrow_allocate_array_stream()
-  x$export_stream(nanoarrow_pointer_addr_chr(stream))
+  x$export_stream(stream)
 
   stream
 }

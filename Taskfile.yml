@@ -2,7 +2,7 @@ version: "3"
 
 env:
   NOT_CRAN: "true"
-  LIBR_GLAREDB: "false"
+  LIBR_GLAREDB_BUILD: "true"
   DEBUG: "true"
 
 vars:
