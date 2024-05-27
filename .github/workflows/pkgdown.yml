@@ -86,12 +86,13 @@ jobs:
         env:
           LIBR_GLAREDB_BUILD: "false"
         with:
-          extra-packages: any::pkgdown, local::.
+          extra-packages: any::pkgdown
           needs: website
 
       - name: Build site
-        shell: Rscript {0}
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        run: |
+          R CMD INSTALL --no-multiarch --with-keep.source .
+          Rscript -e 'pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)'
 
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'
