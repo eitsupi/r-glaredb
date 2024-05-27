@@ -11,6 +11,7 @@ glaredb_connect(
   disable_tls = FALSE,
   cloud_addr = "https://console.glaredb.com",
   location = NULL,
+  storage_options = NULL,
   env = parent.frame()
 )
 }
@@ -27,6 +28,8 @@ a cloud URL or \code{NULL}. If \code{NULL}, a in-memory database is used.}
 \item{cloud_addr}{A character of a GlareDB cloud URL.}
 
 \item{location}{TODO}
+
+\item{storage_options}{Named character vector of storage options or \code{NULL} (default).}
 
 \item{env}{TODO}
 }
