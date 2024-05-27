@@ -45,9 +45,11 @@ impl RGlareDbTable {
         Ok(RGlareDbTable { schema, batches })
     }
 
-    pub fn export_stream(&self, stream_ptr: &str) -> savvy::Result<()> {
-        let stream_ptr: usize = stream_ptr.parse().unwrap();
-        let stream_out = stream_ptr as *mut FFI_ArrowArrayStream;
+    pub fn export_stream(&self, stream_ptr: savvy::Sexp) -> savvy::Result<()> {
+        let stream_out = unsafe {
+            savvy::ExternalPointerSexp::try_from(stream_ptr)?
+                .cast_mut_unchecked::<FFI_ArrowArrayStream>()
+        };
 
         let reader = arrow::record_batch::RecordBatchIterator::new(
             self.batches.clone().into_iter().map(Ok),

@@ -7,7 +7,8 @@
 		"ghcr.io/devcontainers-contrib/features/protoc:1": {},
 		"ghcr.io/rocker-org/devcontainer-features/r-dependent-packages": {
 			"when": "updateContent",
-			"additionalRepositories": "polars = 'https://rpolars.r-universe.dev'"
+			"additionalRepositories": "polars = 'https://rpolars.r-universe.dev'",
+			"dependencyTypes": "all,Config/Needs/dev,Config/Needs/website"
 		},
 		"ghcr.io/eitsupi/devcontainer-features/go-task:1": {}
 	},
