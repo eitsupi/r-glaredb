@@ -9,8 +9,10 @@ use connection::RGlareDbConnection;
 use execution::RGlareDbExecutionOutput;
 use savvy::savvy;
 
+/// @rdname glaredb_execute
+/// @export
 #[savvy]
-pub fn sql(
+pub fn glaredb_sql(
     query: &str,
     connection: Option<&RGlareDbConnection>,
 ) -> savvy::Result<RGlareDbExecutionOutput> {
@@ -21,8 +23,10 @@ pub fn sql(
     }
 }
 
+/// @rdname glaredb_execute
+/// @export
 #[savvy]
-pub fn prql(
+pub fn glaredb_prql(
     query: &str,
     connection: Option<&RGlareDbConnection>,
 ) -> savvy::Result<RGlareDbExecutionOutput> {

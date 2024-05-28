@@ -42,6 +42,6 @@ Connect to a GlareDB database
 \examples{
 con <- glaredb_connect()
 
-con$sql("SELECT 'hello from R' as hello") |>
-  as.data.frame()
+glaredb_sql("SELECT 'hello from R' as hello", con) |>
+  as_glaredb_table()
 }
