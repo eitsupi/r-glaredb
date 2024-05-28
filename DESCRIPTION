@@ -20,6 +20,7 @@ Suggests:
     knitr,
     polars,
     patrick,
+    rlang,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/Needs/dev:
