@@ -34,13 +34,13 @@ SEXP handle_result(SEXP res_) {
     return (SEXP)res;
 }
 
-SEXP savvy_sql__impl(SEXP query, SEXP connection) {
-    SEXP res = savvy_sql__ffi(query, connection);
+SEXP savvy_glaredb_sql__impl(SEXP query, SEXP connection) {
+    SEXP res = savvy_glaredb_sql__ffi(query, connection);
     return handle_result(res);
 }
 
-SEXP savvy_prql__impl(SEXP query, SEXP connection) {
-    SEXP res = savvy_prql__ffi(query, connection);
+SEXP savvy_glaredb_prql__impl(SEXP query, SEXP connection) {
+    SEXP res = savvy_glaredb_prql__ffi(query, connection);
     return handle_result(res);
 }
 
@@ -54,25 +54,6 @@ SEXP savvy_connect__impl(SEXP cloud_addr, SEXP disable_tls, SEXP data_dir_or_clo
     return handle_result(res);
 }
 
-SEXP savvy_RGlareDbConnection_default_in_memory__impl(void) {
-    SEXP res = savvy_RGlareDbConnection_default_in_memory__ffi();
-    return handle_result(res);
-}
-
-SEXP savvy_RGlareDbConnection_sql__impl(SEXP self__, SEXP query) {
-    SEXP res = savvy_RGlareDbConnection_sql__ffi(self__, query);
-    return handle_result(res);
-}
-
-SEXP savvy_RGlareDbConnection_prql__impl(SEXP self__, SEXP query) {
-    SEXP res = savvy_RGlareDbConnection_prql__ffi(self__, query);
-    return handle_result(res);
-}
-
-SEXP savvy_RGlareDbConnection_execute__impl(SEXP self__, SEXP query) {
-    SEXP res = savvy_RGlareDbConnection_execute__ffi(self__, query);
-    return handle_result(res);
-}
 
 SEXP savvy_RGlareDbExecutionOutput_print__impl(SEXP self__) {
     SEXP res = savvy_RGlareDbExecutionOutput_print__ffi(self__);
@@ -102,14 +83,11 @@ SEXP savvy_RGlareDbTable_export_stream__impl(SEXP self__, SEXP stream_ptr) {
 
 
 static const R_CallMethodDef CallEntries[] = {
-    {"savvy_sql__impl", (DL_FUNC) &savvy_sql__impl, 2},
-    {"savvy_prql__impl", (DL_FUNC) &savvy_prql__impl, 2},
+    {"savvy_glaredb_sql__impl", (DL_FUNC) &savvy_glaredb_sql__impl, 2},
+    {"savvy_glaredb_prql__impl", (DL_FUNC) &savvy_glaredb_prql__impl, 2},
     {"savvy_execute__impl", (DL_FUNC) &savvy_execute__impl, 2},
     {"savvy_connect__impl", (DL_FUNC) &savvy_connect__impl, 7},
-    {"savvy_RGlareDbConnection_default_in_memory__impl", (DL_FUNC) &savvy_RGlareDbConnection_default_in_memory__impl, 0},
-    {"savvy_RGlareDbConnection_sql__impl", (DL_FUNC) &savvy_RGlareDbConnection_sql__impl, 2},
-    {"savvy_RGlareDbConnection_prql__impl", (DL_FUNC) &savvy_RGlareDbConnection_prql__impl, 2},
-    {"savvy_RGlareDbConnection_execute__impl", (DL_FUNC) &savvy_RGlareDbConnection_execute__impl, 2},
+
     {"savvy_RGlareDbExecutionOutput_print__impl", (DL_FUNC) &savvy_RGlareDbExecutionOutput_print__impl, 1},
     {"savvy_RGlareDbExecutionOutput_to_table__impl", (DL_FUNC) &savvy_RGlareDbExecutionOutput_to_table__impl, 1},
     {"savvy_RGlareDbTable_print__impl", (DL_FUNC) &savvy_RGlareDbTable_print__impl, 1},

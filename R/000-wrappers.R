@@ -23,16 +23,18 @@ NULL
   }
 }
 
-
-sql <- function(query, connection = NULL) {
+#' @rdname glaredb_execute
+#' @export
+glaredb_sql <- function(query, connection = NULL) {
   connection <- .savvy_extract_ptr(connection, "RGlareDbConnection")
-  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_sql__impl, query, connection))
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_glaredb_sql__impl, query, connection))
 }
 
-
-prql <- function(query, connection = NULL) {
+#' @rdname glaredb_execute
+#' @export
+glaredb_prql <- function(query, connection = NULL) {
   connection <- .savvy_extract_ptr(connection, "RGlareDbConnection")
-  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_prql__impl, query, connection))
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_glaredb_prql__impl, query, connection))
 }
 
 
@@ -48,30 +50,11 @@ connect <- function(cloud_addr, disable_tls, data_dir_or_cloud_url = NULL, spill
 
 ### wrapper functions for RGlareDbConnection
 
-RGlareDbConnection_sql <- function(self) {
-  function(query) {
-    .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_RGlareDbConnection_sql__impl, self, query))
-  }
-}
-
-RGlareDbConnection_prql <- function(self) {
-  function(query) {
-    .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_RGlareDbConnection_prql__impl, self, query))
-  }
-}
-
-RGlareDbConnection_execute <- function(self) {
-  function(query) {
-    .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_RGlareDbConnection_execute__impl, self, query))
-  }
-}
 
 .savvy_wrap_RGlareDbConnection <- function(ptr) {
   e <- new.env(parent = emptyenv())
   e$.ptr <- ptr
-    e$sql <- RGlareDbConnection_sql(ptr)
-  e$prql <- RGlareDbConnection_prql(ptr)
-  e$execute <- RGlareDbConnection_execute(ptr)
+  
   
   class(e) <- "RGlareDbConnection"
   e
@@ -83,9 +66,6 @@ RGlareDbConnection <- new.env(parent = emptyenv())
 
 ### associated functions for RGlareDbConnection
 
-RGlareDbConnection$default_in_memory <- function() {
-  .savvy_wrap_RGlareDbConnection(.Call(savvy_RGlareDbConnection_default_in_memory__impl))
-}
 
 
 ### wrapper functions for RGlareDbExecutionOutput

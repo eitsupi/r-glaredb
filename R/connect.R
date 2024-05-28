@@ -14,8 +14,8 @@
 #' @examples
 #' con <- glaredb_connect()
 #'
-#' con$sql("SELECT 'hello from R' as hello") |>
-#'   as.data.frame()
+#' glaredb_sql("SELECT 'hello from R' as hello", con) |>
+#'   as_glaredb_table()
 glaredb_connect <- function(
     data_dir_or_cloud_url = NULL,
     ...,
