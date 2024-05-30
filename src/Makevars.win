@@ -35,8 +35,10 @@ $(STATLIB):
 		exit 0; \
 	fi && \
 	export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER="$(CARGO_LINKER)" && \
-	  export LIBRARY_PATH="$${LIBRARY_PATH};$(LIBDIR)/libgcc_mock" && \
-	  cargo build $(CARGO_BUILD_ARGS)
+		export CC="$(CC)" && \
+		export CFLAGS="$(CFLAGS) -Wno-error=pedantic -Wno-error=overlength-strings" && \
+		export LIBRARY_PATH="$${LIBRARY_PATH};$(LIBDIR)/libgcc_mock" && \
+		cargo build $(CARGO_BUILD_ARGS)
 
 C_clean:
 	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS)
