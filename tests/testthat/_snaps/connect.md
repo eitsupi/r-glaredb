@@ -4,7 +4,7 @@
       glaredb_connect(env = NULL)
     Output
       GlareDB connection
-        Connected to unknown env
+        Connected to <environment: R_GlobalEnv>
 
 ---
 

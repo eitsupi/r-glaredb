@@ -27,6 +27,8 @@ glaredb_connect <- function(
     location = NULL,
     storage_options = NULL,
     env = parent.frame()) {
+  env <- env %||% .GlobalEnv
+
   con <- connect(
     cloud_addr = cloud_addr,
     disable_tls = disable_tls,
