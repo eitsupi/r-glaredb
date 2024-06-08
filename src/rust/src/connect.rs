@@ -10,11 +10,11 @@ use std::sync::Arc;
 pub fn connect(
     cloud_addr: &str,
     disable_tls: bool,
+    env: EnvironmentSexp,
     data_dir_or_cloud_url: Option<&str>,
     spill_path: Option<&str>,
     location: Option<&str>,
     storage_options: Option<StringSexp>,
-    env: Option<EnvironmentSexp>,
 ) -> savvy::Result<RGlareDbConnection> {
     let data_dir_or_cloud_url = data_dir_or_cloud_url.map(|s| s.to_string());
     let spill_path = spill_path.map(|s| s.to_string());
@@ -24,7 +24,6 @@ pub fn connect(
         .map(StrageOptions::try_from)
         .transpose()?
         .map(|s| s.options);
-    let env = env.unwrap_or(EnvironmentSexp::global_env());
 
     GLOBAL_RUNTIME.0.block_on(async move {
         Ok(RGlareDbConnection {

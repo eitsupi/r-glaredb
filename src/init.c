@@ -49,8 +49,8 @@ SEXP savvy_execute__impl(SEXP query, SEXP connection) {
     return handle_result(res);
 }
 
-SEXP savvy_connect__impl(SEXP cloud_addr, SEXP disable_tls, SEXP data_dir_or_cloud_url, SEXP spill_path, SEXP location, SEXP storage_options, SEXP env) {
-    SEXP res = savvy_connect__ffi(cloud_addr, disable_tls, data_dir_or_cloud_url, spill_path, location, storage_options, env);
+SEXP savvy_connect__impl(SEXP cloud_addr, SEXP disable_tls, SEXP env, SEXP data_dir_or_cloud_url, SEXP spill_path, SEXP location, SEXP storage_options) {
+    SEXP res = savvy_connect__ffi(cloud_addr, disable_tls, env, data_dir_or_cloud_url, spill_path, location, storage_options);
     return handle_result(res);
 }
 
