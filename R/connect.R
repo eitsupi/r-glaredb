@@ -1,5 +1,6 @@
 #' Connect to a GlareDB database
 #'
+#' @aliases RGlareDbConnection
 #' @param data_dir_or_cloud_url A character of path to a local GlareDB database or
 #' a cloud URL or `NULL`. If `NULL`, a in-memory database is used.
 #' @param ... Ignored.
@@ -13,6 +14,7 @@
 #' @export
 #' @examples
 #' con <- glaredb_connect()
+#' con
 #'
 #' glaredb_sql("SELECT 'hello from R' as hello", con) |>
 #'   as_glaredb_table()
@@ -25,7 +27,7 @@ glaredb_connect <- function(
     location = NULL,
     storage_options = NULL,
     env = parent.frame()) {
-  connect(
+  con <- connect(
     cloud_addr = cloud_addr,
     disable_tls = disable_tls,
     data_dir_or_cloud_url = data_dir_or_cloud_url,
@@ -34,4 +36,25 @@ glaredb_connect <- function(
     storage_options = storage_options,
     env = env
   )
+
+  # Store the environment for printing
+  con$.env <- env
+  lockBinding(".env", con)
+
+  con
+}
+
+
+#' @export
+print.RGlareDbConnection <- function(x, ...) {
+  cat("GlareDB connection\n")
+  cat("  Connected to ")
+
+  if (is.environment(x$.env)) {
+    print(x$.env)
+  } else {
+    cat("unknown env\n")
+  }
+
+  invisible(x)
 }
