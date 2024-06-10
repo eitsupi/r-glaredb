@@ -83,6 +83,15 @@ jobs:
           Ncpus: "2"
           extra-repositories: https://rpolars.r-universe.dev # For the polars package
 
+      - if: runner.os == 'Windows'
+        run: |
+          /c/rtools44/usr/bin/pacman.exe -Sy --noconfirm nasm
+          echo "PATH=/c/rtools44/usr/bin:$PATH" >>$GITHUB_ENV
+
+      - if: runner.os == 'Windows'
+        run: |
+          nasm -v
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
