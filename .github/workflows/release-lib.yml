@@ -55,9 +55,6 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: ilammy/setup-nasm@v1
-        if: runner.os == 'Windows'
-
       - name: prep Rust
         working-directory: src/rust
         run: |
