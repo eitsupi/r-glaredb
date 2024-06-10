@@ -95,11 +95,6 @@ jobs:
       - if: runner.os == 'Windows'
         run: |
           /c/rtools44/usr/bin/pacman.exe -Sy --noconfirm nasm
-          echo "PATH=/c/rtools44/usr/bin:$PATH" >>$GITHUB_ENV
-
-      - if: runner.os == 'Windows'
-        run: |
-          nasm -v
 
       - name: Set rust target
         id: rust-target
