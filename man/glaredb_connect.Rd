@@ -2,6 +2,7 @@
 % Please edit documentation in R/connect.R
 \name{glaredb_connect}
 \alias{glaredb_connect}
+\alias{RGlareDbConnection}
 \title{Connect to a GlareDB database}
 \usage{
 glaredb_connect(
@@ -41,6 +42,7 @@ Connect to a GlareDB database
 }
 \examples{
 con <- glaredb_connect()
+con
 
 glaredb_sql("SELECT 'hello from R' as hello", con) |>
   as_glaredb_table()
