@@ -16,11 +16,11 @@ thiserror = "1.0"
 anyhow = "1.0.83"
 async-trait = "0.1.80"
 once_cell = "1.19.0"
-glaredb = { git = "https://github.com/GlareDB/glaredb", rev = "c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f" }
-sqlexec = { git = "https://github.com/GlareDB/glaredb", rev = "c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f" }
-metastore = { git = "https://github.com/GlareDB/glaredb", rev = "c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f" }
-arrow_util = { git = "https://github.com/GlareDB/glaredb", rev = "c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f" }
-terminal_util = { git = "https://github.com/GlareDB/glaredb", rev = "c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f" }
+glaredb = { git = "https://github.com/GlareDB/glaredb", tag = "v0.9.3" }
+sqlexec = { git = "https://github.com/GlareDB/glaredb", tag = "v0.9.3" }
+metastore = { git = "https://github.com/GlareDB/glaredb", tag = "v0.9.3" }
+arrow_util = { git = "https://github.com/GlareDB/glaredb", tag = "v0.9.3" }
+terminal_util = { git = "https://github.com/GlareDB/glaredb", tag = "v0.9.3" }
 
 # Prevent dynamic linking of lzma, which comes from datafusion
 lzma-sys = { version = "*", features = ["static"] }
