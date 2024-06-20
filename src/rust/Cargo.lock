@@ -430,7 +430,7 @@ dependencies = [
 [[package]]
 name = "arrow_util"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "comfy-table",
  "datafusion",
@@ -1699,7 +1699,7 @@ dependencies = [
 [[package]]
 name = "catalog"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "datafusion",
  "logutil",
@@ -2548,7 +2548,7 @@ dependencies = [
 [[package]]
 name = "datafusion_ext"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "async-recursion",
  "async-trait",
@@ -2575,7 +2575,7 @@ dependencies = [
 [[package]]
 name = "datasources"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "apache-avro",
  "async-channel",
@@ -2642,7 +2642,7 @@ dependencies = [
 [[package]]
 name = "decimal"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "num-traits",
  "regex",
@@ -2894,7 +2894,7 @@ dependencies = [
 [[package]]
 name = "distexec"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "async-channel",
  "datafusion",
@@ -3512,7 +3512,7 @@ dependencies = [
 [[package]]
 name = "glaredb"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "datafusion",
  "derive_builder",
@@ -3980,7 +3980,7 @@ checksum = "8bb03732005da905c88227371639bf1ad885cc712789c011c31c5fb3ab3ccf02"
 [[package]]
 name = "ioutil"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "bytes",
  "home",
@@ -4638,7 +4638,7 @@ checksum = "90ed8c1e510134f979dbc4f070f87d4313098b704861a105fe34231c70a3901c"
 [[package]]
 name = "logutil"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "chrono",
  "tracing",
@@ -4803,7 +4803,7 @@ dependencies = [
 [[package]]
 name = "metastore"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "async-trait",
  "bytes",
@@ -5283,7 +5283,7 @@ dependencies = [
 [[package]]
 name = "object_store_util"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "async-trait",
  "bytes",
@@ -5475,7 +5475,7 @@ dependencies = [
 [[package]]
 name = "parser"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "prql-compiler",
  "sqlparser 0.45.0",
@@ -5535,7 +5535,7 @@ dependencies = [
 [[package]]
 name = "pgrepr"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "bytes",
  "chrono",
@@ -5823,7 +5823,7 @@ dependencies = [
 [[package]]
 name = "protogen"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "datafusion",
  "datafusion-proto",
@@ -5843,7 +5843,7 @@ dependencies = [
 [[package]]
 name = "proxyutil"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "async-trait",
  "futures",
@@ -6214,7 +6214,7 @@ dependencies = [
 [[package]]
 name = "repr"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "chrono",
  "decimal",
@@ -7293,7 +7293,7 @@ checksum = "1b6b67fb9a61334225b5b790716f609cd58395f895b3fe8b328786812a40bc3b"
 [[package]]
 name = "snowflake_connector"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "base64 0.22.1",
  "bytes",
@@ -7355,7 +7355,7 @@ dependencies = [
 [[package]]
 name = "sqlbuiltins"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "arrow-cast",
  "async-openai",
@@ -7394,7 +7394,7 @@ dependencies = [
 [[package]]
 name = "sqlexec"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "arrow_util",
  "async-trait",
@@ -7731,7 +7731,7 @@ checksum = "55937e1799185b12863d447f42597ed69d9928686b8d88a1df17376a097d8369"
 [[package]]
 name = "telemetry"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "segment",
  "serde_json",
@@ -7764,7 +7764,7 @@ dependencies = [
 [[package]]
 name = "terminal_util"
 version = "0.9.3"
-source = "git+https://github.com/GlareDB/glaredb?rev=c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.3#c7befa9b1624ad08cdea0513ca0ae3483a3e1d9f"
 dependencies = [
  "crossterm",
 ]
