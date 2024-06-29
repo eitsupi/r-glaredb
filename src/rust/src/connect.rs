@@ -1,6 +1,6 @@
 use crate::connection::RGlareDbConnection;
 use crate::environment::REnvironmentReader;
-use crate::error::RGlareDbError;
+use crate::error::RGlareDbDatabaseError;
 use crate::runtime::GLOBAL_RUNTIME;
 use savvy::{savvy, EnvironmentSexp, StringSexp};
 use std::collections::HashMap;
@@ -35,13 +35,14 @@ pub fn connect(
                     .spill_path(spill_path)
                     .disable_tls(disable_tls)
                     .cloud_addr(cloud_addr)
-                    .client_type(sqlexec::remote::client::RemoteClientType::Rust)
+                    .client_type(glaredb::ClientType::Rust)
                     .environment_reader(Arc::new(REnvironmentReader::new(env)))
                     .build()
-                    .map_err(RGlareDbError::from)?
+                    .map_err(glaredb::DatabaseError::from)
+                    .map_err(RGlareDbDatabaseError::from)?
                     .connect()
                     .await
-                    .map_err(RGlareDbError::from)?,
+                    .map_err(RGlareDbDatabaseError::from)?,
             ),
         })
     })

@@ -1,10 +1,10 @@
 use crate::execution::RGlareDbExecutionOutput;
 use crate::table::RGlareDbTable;
 use datafusion::datasource::{MemTable, TableProvider};
+use glaredb::EnvironmentReader;
 use savvy::ffi::SEXP;
 use savvy::protect::{insert_to_preserved_list, release_from_preserved_list};
 use savvy::{EnvironmentSexp, Sexp};
-use sqlexec::environment::EnvironmentReader;
 use std::sync::{Arc, Mutex};
 
 // TODO
