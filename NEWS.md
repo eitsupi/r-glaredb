@@ -1,7 +1,7 @@
 # glaredb 0.0.2
 
 - Support the `storage_options` argument of `glaredb_connect()` function. (#28)
-- Based of glaredb 0.9.4. (#39)
+- Based on glaredb 0.9.4. (#39)
 
 # glaredb 0.0.1
 
