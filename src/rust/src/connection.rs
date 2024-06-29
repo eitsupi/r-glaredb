@@ -1,5 +1,5 @@
 use crate::environment::REnvironmentReader;
-use crate::error::RGlareDbError;
+use crate::error::RGlareDbDatabaseError;
 use crate::execution::RGlareDbExecutionOutput;
 use crate::runtime::GLOBAL_RUNTIME;
 use once_cell::sync::OnceCell;
@@ -25,11 +25,12 @@ impl RGlareDbConnection {
                             .environment_reader(Arc::new(REnvironmentReader::new(
                                 EnvironmentSexp::global_env(),
                             )))
-                            .build()?
+                            .build()
+                            .map_err(glaredb::DatabaseError::from)?
                             .connect()
                             .await?,
                     ),
-                }) as Result<_, RGlareDbError>
+                }) as Result<_, RGlareDbDatabaseError>
             })
         })?;
 
@@ -40,7 +41,7 @@ impl RGlareDbConnection {
         Ok(GLOBAL_RUNTIME
             .0
             .block_on(self.inner.sql(query).evaluate())
-            .map_err(RGlareDbError::from)?
+            .map_err(RGlareDbDatabaseError::from)?
             .into())
     }
 
@@ -48,7 +49,7 @@ impl RGlareDbConnection {
         Ok(GLOBAL_RUNTIME
             .0
             .block_on(self.inner.prql(query).evaluate())
-            .map_err(RGlareDbError::from)?
+            .map_err(RGlareDbDatabaseError::from)?
             .into())
     }
 
@@ -56,7 +57,7 @@ impl RGlareDbConnection {
         Ok(GLOBAL_RUNTIME
             .0
             .block_on(self.inner.execute(query).evaluate())
-            .map_err(RGlareDbError::from)?
+            .map_err(RGlareDbDatabaseError::from)?
             .into())
     }
 }
