@@ -1,5 +1,6 @@
-use crate::runtime::GLOBAL_RUNTIME;
-use crate::table::RGlareDbTable;
+use std::any::Any;
+use std::sync::{Arc, Mutex};
+
 use arrow::datatypes::Schema;
 use async_trait::async_trait;
 use datafusion::arrow::datatypes::SchemaRef;
@@ -14,8 +15,9 @@ use datafusion::physical_plan::ExecutionPlan;
 use datafusion::prelude::Expr;
 use glaredb::{Operation, SendableRecordBatchStream};
 use savvy::savvy;
-use std::any::Any;
-use std::sync::{Arc, Mutex};
+
+use crate::runtime;
+use crate::table::RGlareDbTable;
 
 #[savvy]
 #[derive(Clone, Debug)]
@@ -113,10 +115,9 @@ impl PartitionStream for RPartition {
 impl From<&RGlareDbExecutionOutput> for RGlareDbTable {
     fn from(exec: &RGlareDbExecutionOutput) -> RGlareDbTable {
         let mut record_stream = exec.op.lock().unwrap().call();
-        let batches = GLOBAL_RUNTIME
-            .0
-            .block_on(record_stream.to_vec())
-            .expect("Must not fail"); // TODO: support async
+        let batches = runtime::block_on(record_stream.to_vec())
+            .expect("must process operation")
+            .expect("must iterate results");
         let schema = if batches.is_empty() {
             Arc::new(Schema::empty())
         } else {

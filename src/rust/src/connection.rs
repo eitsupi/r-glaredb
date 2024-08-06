@@ -1,10 +1,12 @@
+use std::sync::Arc;
+
+use once_cell::sync::OnceCell;
+use savvy::{savvy, EnvironmentSexp};
+
 use crate::environment::REnvironmentReader;
 use crate::error::RGlareDbDatabaseError;
 use crate::execution::RGlareDbExecutionOutput;
-use crate::runtime::GLOBAL_RUNTIME;
-use once_cell::sync::OnceCell;
-use savvy::{savvy, EnvironmentSexp};
-use std::sync::Arc;
+use crate::runtime;
 
 #[savvy]
 #[derive(Clone)]
@@ -18,46 +20,35 @@ impl RGlareDbConnection {
         static DEFAULT_CON: OnceCell<RGlareDbConnection> = OnceCell::new();
 
         let con = DEFAULT_CON.get_or_try_init(|| {
-            GLOBAL_RUNTIME.0.block_on(async move {
-                Ok(RGlareDbConnection {
+            runtime::block_on(async move {
+                Ok::<RGlareDbConnection, savvy::Error>(RGlareDbConnection {
                     inner: Arc::new(
                         glaredb::ConnectOptionsBuilder::new_in_memory()
                             .environment_reader(Arc::new(REnvironmentReader::new(
                                 EnvironmentSexp::global_env(),
                             )))
                             .build()
-                            .map_err(glaredb::DatabaseError::from)?
+                            .map_err(RGlareDbDatabaseError::from)?
                             .connect()
-                            .await?,
+                            .await
+                            .map_err(RGlareDbDatabaseError::from)?,
                     ),
-                }) as Result<_, RGlareDbDatabaseError>
-            })
+                })
+            })?
         })?;
 
         Ok(con.clone())
     }
 
     pub fn sql(&self, query: &str) -> savvy::Result<RGlareDbExecutionOutput> {
-        Ok(GLOBAL_RUNTIME
-            .0
-            .block_on(self.inner.sql(query).evaluate())
-            .map_err(RGlareDbDatabaseError::from)?
-            .into())
+        Ok(runtime::block_op(self.inner.sql(query).evaluate())?)
     }
 
     pub fn prql(&self, query: &str) -> savvy::Result<RGlareDbExecutionOutput> {
-        Ok(GLOBAL_RUNTIME
-            .0
-            .block_on(self.inner.prql(query).evaluate())
-            .map_err(RGlareDbDatabaseError::from)?
-            .into())
+        Ok(runtime::block_op(self.inner.prql(query).evaluate())?)
     }
 
     pub fn execute(&self, query: &str) -> savvy::Result<RGlareDbExecutionOutput> {
-        Ok(GLOBAL_RUNTIME
-            .0
-            .block_on(self.inner.execute(query).evaluate())
-            .map_err(RGlareDbDatabaseError::from)?
-            .into())
+        Ok(runtime::block_op(self.inner.execute(query).evaluate())?)
     }
 }
