@@ -1,10 +1,11 @@
+use std::sync::Arc;
+
 use arrow::array::RecordBatchReader;
 use arrow::datatypes::Schema;
 use arrow::ffi_stream::{ArrowArrayStreamReader, FFI_ArrowArrayStream};
 use datafusion::arrow::array::RecordBatch;
 use datafusion::datasource::MemTable;
 use savvy::savvy;
-use std::sync::Arc;
 
 #[savvy]
 struct RGlareDbTable {

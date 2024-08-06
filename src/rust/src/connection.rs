@@ -1,10 +1,12 @@
+use std::sync::Arc;
+
+use once_cell::sync::OnceCell;
+use savvy::{savvy, EnvironmentSexp};
+
 use crate::environment::REnvironmentReader;
 use crate::error::RGlareDbDatabaseError;
 use crate::execution::RGlareDbExecutionOutput;
 use crate::runtime::GLOBAL_RUNTIME;
-use once_cell::sync::OnceCell;
-use savvy::{savvy, EnvironmentSexp};
-use std::sync::Arc;
 
 #[savvy]
 #[derive(Clone)]
