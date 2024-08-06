@@ -1,5 +1,6 @@
-use savvy::savvy;
 use std::sync::atomic::{AtomicU64, Ordering};
+
+use savvy::savvy;
 use tokio::runtime::Builder;
 
 #[savvy]
