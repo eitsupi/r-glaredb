@@ -7850,8 +7850,8 @@ dependencies = [
 
 [[package]]
 name = "terminal_util"
-version = "0.9.4"
-source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.4#db9ddece70216afc64e8355009f71eb9bb619241"
+version = "0.9.5"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.5#2e8715f24baae6957d259c7c0dd994162b193561"
 dependencies = [
  "crossterm",
 ]
