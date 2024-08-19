@@ -445,6 +445,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "arrow_util"
+version = "0.9.5"
+source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.5#2e8715f24baae6957d259c7c0dd994162b193561"
+dependencies = [
+ "comfy-table",
+ "datafusion",
+ "once_cell",
+ "textwrap",
+]
+
+[[package]]
 name = "async-channel"
 version = "2.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6099,7 +6110,7 @@ name = "r-glaredb"
 version = "0.0.2"
 dependencies = [
  "arrow",
- "arrow_util",
+ "arrow_util 0.9.5",
  "async-trait",
  "datafusion",
  "glaredb",
@@ -7468,7 +7479,7 @@ name = "sqlexec"
 version = "0.9.4"
 source = "git+https://github.com/GlareDB/glaredb?tag=v0.9.4#db9ddece70216afc64e8355009f71eb9bb619241"
 dependencies = [
- "arrow_util",
+ "arrow_util 0.9.4",
  "async-trait",
  "bytes",
  "catalog",

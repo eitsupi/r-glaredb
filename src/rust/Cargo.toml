@@ -16,7 +16,7 @@ thiserror = "1.0"
 async-trait = "0.1.81"
 once_cell = "1.19.0"
 glaredb = { git = "https://github.com/GlareDB/glaredb", tag = "v0.9.4" }
-arrow_util = { git = "https://github.com/GlareDB/glaredb", tag = "v0.9.4" }
+arrow_util = { git = "https://github.com/GlareDB/glaredb", tag = "v0.9.5" }
 terminal_util = { git = "https://github.com/GlareDB/glaredb", tag = "v0.9.4" }
 
 # Prevent dynamic linking of lzma, which comes from datafusion
