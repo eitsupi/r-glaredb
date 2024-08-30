@@ -1,19 +1,18 @@
 use std::any::Any;
 use std::sync::{Arc, Mutex};
 
-use arrow::datatypes::Schema;
 use async_trait::async_trait;
-use datafusion::arrow::datatypes::SchemaRef;
-use datafusion::datasource::TableProvider;
-use datafusion::error::DataFusionError;
-use datafusion::execution::context::SessionState;
-use datafusion::execution::TaskContext;
-use datafusion::logical_expr::{TableProviderFilterPushDown, TableType};
-use datafusion::physical_plan::stream::RecordBatchStreamAdapter;
-use datafusion::physical_plan::streaming::{PartitionStream, StreamingTableExec};
-use datafusion::physical_plan::ExecutionPlan;
-use datafusion::prelude::Expr;
-use glaredb::{Operation, SendableRecordBatchStream};
+use glaredb::ext::arrow::datatypes::{Schema, SchemaRef};
+use glaredb::ext::datafusion::datasource::TableProvider;
+use glaredb::ext::datafusion::error::DataFusionError;
+use glaredb::ext::datafusion::execution::context::SessionState;
+use glaredb::ext::datafusion::execution::TaskContext;
+use glaredb::ext::datafusion::logical_expr::{TableProviderFilterPushDown, TableType};
+use glaredb::ext::datafusion::physical_plan::stream::RecordBatchStreamAdapter;
+use glaredb::ext::datafusion::physical_plan::streaming::{PartitionStream, StreamingTableExec};
+use glaredb::ext::datafusion::physical_plan::ExecutionPlan;
+use glaredb::ext::datafusion::prelude::Expr;
+use glaredb::ext::SendableRecordBatchStream;
 use savvy::savvy;
 
 use crate::runtime;
@@ -94,7 +93,7 @@ impl TableProvider for RGlareDbExecutionOutput {
 
 struct RPartition {
     schema: SchemaRef,
-    exec: Arc<Mutex<Operation>>,
+    exec: Arc<Mutex<glaredb::Operation>>,
 }
 
 impl PartitionStream for RPartition {
