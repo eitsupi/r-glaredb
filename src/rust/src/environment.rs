@@ -2,7 +2,6 @@ use std::sync::{Arc, Mutex};
 
 use glaredb::ext::datafusion::datasource::{MemTable, TableProvider};
 use glaredb::ext::EnvironmentReader;
-use glaredb::EnvironmentReader;
 use savvy::ffi::SEXP;
 use savvy::protect::{insert_to_preserved_list, release_from_preserved_list};
 use savvy::{EnvironmentSexp, Sexp};
