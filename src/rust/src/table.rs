@@ -1,10 +1,12 @@
 use std::sync::Arc;
 
-use arrow::array::RecordBatchReader;
-use arrow::datatypes::Schema;
-use arrow::ffi_stream::{ArrowArrayStreamReader, FFI_ArrowArrayStream};
-use datafusion::arrow::array::RecordBatch;
-use datafusion::datasource::MemTable;
+use glaredb::ext::arrow::array::RecordBatchReader;
+use glaredb::ext::arrow::datatypes::Schema;
+use glaredb::ext::arrow::error::ArrowError;
+use glaredb::ext::arrow::ffi_stream::{ArrowArrayStreamReader, FFI_ArrowArrayStream};
+use glaredb::ext::datafusion::datasource::MemTable;
+use glaredb::ext::tools::{pretty_format_batches, term_width};
+use glaredb::ext::RecordBatch;
 use savvy::savvy;
 
 #[savvy]
@@ -19,13 +21,8 @@ impl RGlareDbTable {
         let schema = &self.schema;
         let batches = &self.batches;
 
-        let disp = arrow_util::pretty::pretty_format_batches(
-            &schema,
-            &batches,
-            Some(terminal_util::term_width()),
-            None,
-        )
-        .map_err(|e| e.to_string())?;
+        let disp = pretty_format_batches(&schema, &batches, Some(term_width()), None)
+            .map_err(|e| e.to_string())?;
 
         savvy::r_println!("{disp}");
 
@@ -40,7 +37,7 @@ impl RGlareDbTable {
         };
         let schema = stream_reader.schema();
         let batches = stream_reader
-            .collect::<Result<Vec<RecordBatch>, arrow::error::ArrowError>>()
+            .collect::<Result<Vec<RecordBatch>, ArrowError>>()
             .map_err(|e| e.to_string())?;
 
         Ok(RGlareDbTable { schema, batches })
@@ -52,12 +49,13 @@ impl RGlareDbTable {
                 .cast_mut_unchecked::<FFI_ArrowArrayStream>()
         };
 
-        let reader = arrow::record_batch::RecordBatchIterator::new(
+        let reader = glaredb::ext::arrow::record_batch::RecordBatchIterator::new(
             self.batches.clone().into_iter().map(Ok),
             self.schema.clone(),
         );
 
-        let reader: Box<dyn arrow::record_batch::RecordBatchReader + Send> = Box::new(reader);
+        let reader: Box<dyn glaredb::ext::arrow::record_batch::RecordBatchReader + Send> =
+            Box::new(reader);
         let mut stream = FFI_ArrowArrayStream::new(reader);
 
         unsafe {
