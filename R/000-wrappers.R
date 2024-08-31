@@ -25,133 +25,233 @@ NULL
 
 #' @rdname glaredb_execute
 #' @export
-glaredb_sql <- function(query, connection = NULL) {
-  connection <- .savvy_extract_ptr(connection, "RGlareDbConnection")
-  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_glaredb_sql__impl, query, connection))
+`glaredb_sql` <- function(`query`, `connection` = NULL) {
+  `connection` <- .savvy_extract_ptr(`connection`, "RGlareDbConnection")
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_glaredb_sql__impl, `query`, `connection`))
 }
 
 #' @rdname glaredb_execute
 #' @export
-glaredb_prql <- function(query, connection = NULL) {
-  connection <- .savvy_extract_ptr(connection, "RGlareDbConnection")
-  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_glaredb_prql__impl, query, connection))
+`glaredb_prql` <- function(`query`, `connection` = NULL) {
+  `connection` <- .savvy_extract_ptr(`connection`, "RGlareDbConnection")
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_glaredb_prql__impl, `query`, `connection`))
 }
 
 
-execute <- function(query, connection = NULL) {
-  connection <- .savvy_extract_ptr(connection, "RGlareDbConnection")
-  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_execute__impl, query, connection))
+`execute` <- function(`query`, `connection` = NULL) {
+  `connection` <- .savvy_extract_ptr(`connection`, "RGlareDbConnection")
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_execute__impl, `query`, `connection`))
 }
 
 
-connect <- function(cloud_addr, disable_tls, env, data_dir_or_cloud_url = NULL, spill_path = NULL, location = NULL, storage_options = NULL) {
-  .savvy_wrap_RGlareDbConnection(.Call(savvy_connect__impl, cloud_addr, disable_tls, env, data_dir_or_cloud_url, spill_path, location, storage_options))
+`connect` <- function(`cloud_addr`, `disable_tls`, `env`, `data_dir_or_cloud_url` = NULL, `spill_path` = NULL, `location` = NULL, `storage_options` = NULL) {
+  .savvy_wrap_RGlareDbConnection(.Call(savvy_connect__impl, `cloud_addr`, `disable_tls`, `env`, `data_dir_or_cloud_url`, `spill_path`, `location`, `storage_options`))
 }
 
 ### wrapper functions for RGlareDbConnection
 
 
-.savvy_wrap_RGlareDbConnection <- function(ptr) {
+`.savvy_wrap_RGlareDbConnection` <- function(ptr) {
   e <- new.env(parent = emptyenv())
   e$.ptr <- ptr
-  
-  
+
+
   class(e) <- "RGlareDbConnection"
   e
 }
 
+#' @export
+`$<-.RGlareDbConnection` <- function(x, name, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbConnection` <- function(x, i, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
 
 
-RGlareDbConnection <- new.env(parent = emptyenv())
+
+`RGlareDbConnection` <- new.env(parent = emptyenv())
+
+#' @export
+`$<-.RGlareDbConnection` <- function(x, name, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbConnection` <- function(x, i, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
 
 ### associated functions for RGlareDbConnection
 
 
 
+class(`RGlareDbConnection`) <- "RGlareDbConnection__bundle"
+
+#' @export
+`print.RGlareDbConnection__bundle` <- function(x, ...) {
+  cat('RGlareDbConnection')
+}
+
+#' @export
+`$<-.RGlareDbConnection__bundle` <- function(x, name, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbConnection__bundle` <- function(x, i, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
+
 ### wrapper functions for RGlareDbExecutionOutput
 
-RGlareDbExecutionOutput_print <- function(self) {
+`RGlareDbExecutionOutput_print` <- function(self) {
   function() {
-  invisible(.Call(savvy_RGlareDbExecutionOutput_print__impl, self))
+    invisible(.Call(savvy_RGlareDbExecutionOutput_print__impl, `self`))
   }
 }
 
-RGlareDbExecutionOutput_to_table <- function(self) {
+`RGlareDbExecutionOutput_to_table` <- function(self) {
   function() {
-    .savvy_wrap_RGlareDbTable(.Call(savvy_RGlareDbExecutionOutput_to_table__impl, self))
+    .savvy_wrap_RGlareDbTable(.Call(savvy_RGlareDbExecutionOutput_to_table__impl, `self`))
   }
 }
 
-.savvy_wrap_RGlareDbExecutionOutput <- function(ptr) {
+`.savvy_wrap_RGlareDbExecutionOutput` <- function(ptr) {
   e <- new.env(parent = emptyenv())
   e$.ptr <- ptr
-    e$print <- RGlareDbExecutionOutput_print(ptr)
-  e$to_table <- RGlareDbExecutionOutput_to_table(ptr)
-  
+  e$`print` <- `RGlareDbExecutionOutput_print`(ptr)
+  e$`to_table` <- `RGlareDbExecutionOutput_to_table`(ptr)
+
   class(e) <- "RGlareDbExecutionOutput"
   e
 }
 
+#' @export
+`$<-.RGlareDbExecutionOutput` <- function(x, name, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbExecutionOutput` <- function(x, i, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
 
 
-RGlareDbExecutionOutput <- new.env(parent = emptyenv())
+
+`RGlareDbExecutionOutput` <- new.env(parent = emptyenv())
+
+#' @export
+`$<-.RGlareDbExecutionOutput` <- function(x, name, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbExecutionOutput` <- function(x, i, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
 
 ### associated functions for RGlareDbExecutionOutput
 
 
 
+class(`RGlareDbExecutionOutput`) <- "RGlareDbExecutionOutput__bundle"
+
+#' @export
+`print.RGlareDbExecutionOutput__bundle` <- function(x, ...) {
+  cat('RGlareDbExecutionOutput')
+}
+
+#' @export
+`$<-.RGlareDbExecutionOutput__bundle` <- function(x, name, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbExecutionOutput__bundle` <- function(x, i, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
+
 ### wrapper functions for RGlareDbTable
 
-RGlareDbTable_print <- function(self) {
+`RGlareDbTable_print` <- function(self) {
   function() {
-  invisible(.Call(savvy_RGlareDbTable_print__impl, self))
+    invisible(.Call(savvy_RGlareDbTable_print__impl, `self`))
   }
 }
 
-RGlareDbTable_export_stream <- function(self) {
-  function(stream_ptr) {
-  invisible(.Call(savvy_RGlareDbTable_export_stream__impl, self, stream_ptr))
+`RGlareDbTable_export_stream` <- function(self) {
+  function(`stream_ptr`) {
+    invisible(.Call(savvy_RGlareDbTable_export_stream__impl, `self`, `stream_ptr`))
   }
 }
 
-.savvy_wrap_RGlareDbTable <- function(ptr) {
+`.savvy_wrap_RGlareDbTable` <- function(ptr) {
   e <- new.env(parent = emptyenv())
   e$.ptr <- ptr
-    e$print <- RGlareDbTable_print(ptr)
-  e$export_stream <- RGlareDbTable_export_stream(ptr)
-  
+  e$`print` <- `RGlareDbTable_print`(ptr)
+  e$`export_stream` <- `RGlareDbTable_export_stream`(ptr)
+
   class(e) <- "RGlareDbTable"
   e
 }
 
+#' @export
+`$<-.RGlareDbTable` <- function(x, name, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbTable` <- function(x, i, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
 
 
-RGlareDbTable <- new.env(parent = emptyenv())
+
+`RGlareDbTable` <- new.env(parent = emptyenv())
+
+#' @export
+`$<-.RGlareDbTable` <- function(x, name, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbTable` <- function(x, i, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
 
 ### associated functions for RGlareDbTable
 
-RGlareDbTable$import_stream <- function(stream_ptr) {
-  .savvy_wrap_RGlareDbTable(.Call(savvy_RGlareDbTable_import_stream__impl, stream_ptr))
+`RGlareDbTable`$`import_stream` <- function(`stream_ptr`) {
+  .savvy_wrap_RGlareDbTable(.Call(savvy_RGlareDbTable_import_stream__impl, `stream_ptr`))
 }
 
+
+class(`RGlareDbTable`) <- "RGlareDbTable__bundle"
+
+#' @export
+`print.RGlareDbTable__bundle` <- function(x, ...) {
+  cat('RGlareDbTable')
+}
+
+#' @export
+`$<-.RGlareDbTable__bundle` <- function(x, name, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbTable__bundle` <- function(x, i, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
 
 ### wrapper functions for RGlareDbTokioRuntime
 
 
-.savvy_wrap_RGlareDbTokioRuntime <- function(ptr) {
+`.savvy_wrap_RGlareDbTokioRuntime` <- function(ptr) {
   e <- new.env(parent = emptyenv())
   e$.ptr <- ptr
-  
-  
+
+
   class(e) <- "RGlareDbTokioRuntime"
   e
 }
 
+#' @export
+`$<-.RGlareDbTokioRuntime` <- function(x, name, value) stop("RGlareDbTokioRuntime cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbTokioRuntime` <- function(x, i, value) stop("RGlareDbTokioRuntime cannot be modified", call. = FALSE)
 
 
-RGlareDbTokioRuntime <- new.env(parent = emptyenv())
+
+`RGlareDbTokioRuntime` <- new.env(parent = emptyenv())
+
+#' @export
+`$<-.RGlareDbTokioRuntime` <- function(x, name, value) stop("RGlareDbTokioRuntime cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbTokioRuntime` <- function(x, i, value) stop("RGlareDbTokioRuntime cannot be modified", call. = FALSE)
 
 ### associated functions for RGlareDbTokioRuntime
 
 
+
+class(`RGlareDbTokioRuntime`) <- "RGlareDbTokioRuntime__bundle"
+
+#' @export
+`print.RGlareDbTokioRuntime__bundle` <- function(x, ...) {
+  cat('RGlareDbTokioRuntime')
+}
+
+#' @export
+`$<-.RGlareDbTokioRuntime__bundle` <- function(x, name, value) stop("RGlareDbTokioRuntime cannot be modified", call. = FALSE)
+
+#' @export
+`[[<-.RGlareDbTokioRuntime__bundle` <- function(x, i, value) stop("RGlareDbTokioRuntime cannot be modified", call. = FALSE)
 
