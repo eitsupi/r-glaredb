@@ -38,4 +38,4 @@ Config/Needs/dev:
 Config/Needs/website:
     pkgdown
 Config/testthat/edition: 3
-Config/glaredb/LibVersion: 0.0.2
+Config/glaredb/LibVersion: 0.0.3
