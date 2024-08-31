@@ -1,6 +1,6 @@
 Package: glaredb
 Title: R Bindings for 'GlareDB'
-Version: 0.0.3
+Version: 0.0.3.9000
 Authors@R:
     c(person("Tatsuya", "Shima", email = "ts1s1andn@gmail.com", role = c("aut", "cre")))
 URL: https://github.com/eitsupi/r-glaredb
