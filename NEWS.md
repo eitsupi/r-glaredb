@@ -1,4 +1,4 @@
-# glaredb (development version)
+# glaredb 0.0.3
 
 - Based on glaredb 0.9.5. (#56, thanks @tychoish)
 
