@@ -72,7 +72,27 @@ tasks:
       - build-lib-sums
       - build-documents
     cmds:
+      - task: test-all
       - task: build-readme
+
+  test-all:
+    desc: Run all tests.
+    cmds:
+      - task: test-source
+
+  test-source:
+    desc: Run all tests for source.
+    internal: true
+    sources:
+      - tests/**/*
+      - "{{.R_SOURCE}}"
+      - src/Makevars*
+      - configure*
+      - "{{.MANIFEST}}"
+      - "{{.CARGO_LOCK}}"
+      - "{{.RUST_SOURCE}}"
+    cmds:
+      - Rscript -e 'devtools::test()'
 
   build-readme:
     internal: true
