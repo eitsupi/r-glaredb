@@ -31,6 +31,6 @@
 	},
 	"remoteEnv": {
 		"PKG_SYSREQS": "false"
-	}
-	// "updateContentCommand": "task setup-dev"
+	},
+	"updateContentCommand": "task setup-dev"
 }
