@@ -25,7 +25,9 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/glaredb)](https://CRAN.R-project.org/package=glaredb)
 <!-- badges: end -->
 
-Check out the [GlareDB repo](https://github.com/GlareDB/glaredb) to learn more.
+This package is based on GlareDB `r as.data.frame(glaredb_sql("select version()"))$version`.
+
+Check out the [GlareDB repo](https://github.com/GlareDB/glaredb) for details.
 
 ## Installation
 

@@ -13,8 +13,10 @@ badge](https://eitsupi.r-universe.dev/badges/glaredb)](https://eitsupi.r-univers
 status](https://www.r-pkg.org/badges/version/glaredb)](https://CRAN.R-project.org/package=glaredb)
 <!-- badges: end -->
 
-Check out the [GlareDB repo](https://github.com/GlareDB/glaredb) to
-learn more.
+This package is based on GlareDB v0.9.5.
+
+Check out the [GlareDB repo](https://github.com/GlareDB/glaredb) for
+details.
 
 ## Installation
 
