@@ -13,6 +13,29 @@ vars:
   RUST_SOURCE: src/rust/src/**/*.rs
 
 tasks:
+  setup-dev:
+    desc: Install tools for development.
+    deps:
+      - setup-rust-tools
+
+  setup-rust-tools:
+    desc: Install Rust tools for development.
+    cmds:
+      # TODO: check the savvy version
+      - cargo install savvy-cli
+      - rustup toolchain install nightly
+      - rustup component add rustfmt --toolchain nightly
+
+  format-rust:
+    desc: Format Rust code.
+    sources:
+      - "{{.RUST_SOURCE}}"
+    generates:
+      - "{{.RUST_SOURCE}}"
+    dir: src/rust
+    cmds:
+      - cargo +nightly fmt
+
   build-rust:
     desc: Build the Rust library wrappers.
     sources:
@@ -21,6 +44,8 @@ tasks:
       - "{{.MANIFEST}}"
       - "{{.CARGO_LOCK}}"
       - "{{.RUST_SOURCE}}"
+    deps:
+      - format-rust
     generates:
       - R/000-wrappers.R
     cmds:

@@ -1,10 +1,12 @@
+use std::collections::HashMap;
+use std::sync::Arc;
+
+use savvy::{savvy, EnvironmentSexp, StringSexp};
+
 use crate::connection::RGlareDbConnection;
 use crate::environment::REnvironmentReader;
 use crate::error::RGlareDbDatabaseError;
 use crate::runtime::GLOBAL_RUNTIME;
-use savvy::{savvy, EnvironmentSexp, StringSexp};
-use std::collections::HashMap;
-use std::sync::Arc;
 
 #[savvy]
 pub fn connect(

@@ -1,5 +1,6 @@
-use crate::runtime::GLOBAL_RUNTIME;
-use crate::table::RGlareDbTable;
+use std::any::Any;
+use std::sync::{Arc, Mutex};
+
 use async_trait::async_trait;
 use glaredb::ext::arrow::datatypes::{Schema, SchemaRef};
 use glaredb::ext::datafusion::datasource::TableProvider;
@@ -13,8 +14,9 @@ use glaredb::ext::datafusion::physical_plan::ExecutionPlan;
 use glaredb::ext::datafusion::prelude::Expr;
 use glaredb::ext::SendableRecordBatchStream;
 use savvy::savvy;
-use std::any::Any;
-use std::sync::{Arc, Mutex};
+
+use crate::runtime::GLOBAL_RUNTIME;
+use crate::table::RGlareDbTable;
 
 #[savvy]
 #[derive(Clone, Debug)]

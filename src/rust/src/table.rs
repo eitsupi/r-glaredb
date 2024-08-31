@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use glaredb::ext::arrow::array::RecordBatchReader;
 use glaredb::ext::arrow::datatypes::Schema;
 use glaredb::ext::arrow::error::ArrowError;
@@ -6,7 +8,6 @@ use glaredb::ext::datafusion::datasource::MemTable;
 use glaredb::ext::tools::{pretty_format_batches, term_width};
 use glaredb::ext::RecordBatch;
 use savvy::savvy;
-use std::sync::Arc;
 
 #[savvy]
 struct RGlareDbTable {
