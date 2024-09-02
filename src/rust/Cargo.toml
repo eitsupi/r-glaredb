@@ -8,7 +8,7 @@ publish = false
 crate-type = ["staticlib"]
 
 [dependencies]
-async-trait = "0.1.81"
+async-trait = "0.1.82"
 glaredb = { git = "https://github.com/GlareDB/glaredb", tag = "v0.9.5" }
 lzma-sys = { version = "*", features = ["static"] } # Prevent dynamic linking of lzma, which comes from datafusion
 once_cell = "1.19.0"
