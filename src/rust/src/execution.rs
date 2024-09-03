@@ -15,7 +15,7 @@ use glaredb::ext::datafusion::prelude::Expr;
 use glaredb::ext::SendableRecordBatchStream;
 use savvy::savvy;
 
-use crate::runtime::GLOBAL_RUNTIME;
+use crate::runtime;
 use crate::table::RGlareDbTable;
 
 #[savvy]
@@ -114,10 +114,9 @@ impl PartitionStream for RPartition {
 impl From<&RGlareDbExecutionOutput> for RGlareDbTable {
     fn from(exec: &RGlareDbExecutionOutput) -> RGlareDbTable {
         let mut record_stream = exec.op.lock().unwrap().call();
-        let batches = GLOBAL_RUNTIME
-            .0
-            .block_on(record_stream.to_vec())
-            .expect("Must not fail"); // TODO: support async
+        let batches = runtime::block_on(record_stream.to_vec())
+            .expect("must process operation")
+            .expect("must iterate results");
         let schema = if batches.is_empty() {
             Arc::new(Schema::empty())
         } else {

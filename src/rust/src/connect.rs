@@ -6,7 +6,7 @@ use savvy::{savvy, EnvironmentSexp, StringSexp};
 use crate::connection::RGlareDbConnection;
 use crate::environment::REnvironmentReader;
 use crate::error::RGlareDbDatabaseError;
-use crate::runtime::GLOBAL_RUNTIME;
+use crate::runtime;
 
 #[savvy]
 pub fn connect(
@@ -27,8 +27,8 @@ pub fn connect(
         .transpose()?
         .map(|s| s.options);
 
-    GLOBAL_RUNTIME.0.block_on(async move {
-        Ok(RGlareDbConnection {
+    Ok(runtime::block_on(async move {
+        Ok::<_, RGlareDbDatabaseError>(RGlareDbConnection {
             inner: Arc::new(
                 glaredb::ConnectOptionsBuilder::default()
                     .connection_target(data_dir_or_cloud_url.clone())
@@ -40,14 +40,13 @@ pub fn connect(
                     .client_type(glaredb::ClientType::Rust)
                     .environment_reader(Arc::new(REnvironmentReader::new(env)))
                     .build()
-                    .map_err(glaredb::DatabaseError::from)
                     .map_err(RGlareDbDatabaseError::from)?
                     .connect()
                     .await
                     .map_err(RGlareDbDatabaseError::from)?,
             ),
         })
-    })
+    })??)
 }
 
 #[derive(Clone)]
