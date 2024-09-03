@@ -8,6 +8,7 @@ use crate::error::RGlareDbDatabaseError;
 use crate::execution::RGlareDbExecutionOutput;
 use crate::runtime;
 
+
 #[savvy]
 #[derive(Clone)]
 struct RGlareDbConnection {

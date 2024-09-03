@@ -40,7 +40,7 @@ glaredb_connect <- function(
   )
 
   # Store the environment for printing
-  con$.env <- env
+  assign(".env", env, envir = con)
   lockBinding(".env", con)
 
   con

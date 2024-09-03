@@ -5,26 +5,29 @@
 
 <!-- badges: start -->
 
+[![R-multiverse
+status](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcommunity.r-multiverse.org%2Fapi%2Fpackages%2Fglaredb&query=%24.Version&label=r-multiverse)](https://community.r-multiverse.org/glaredb)
 [![glaredb status
 badge](https://eitsupi.r-universe.dev/badges/glaredb)](https://eitsupi.r-universe.dev/glaredb)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/glaredb)](https://CRAN.R-project.org/package=glaredb)
 <!-- badges: end -->
 
-Check out the [GlareDB repo](https://github.com/GlareDB/glaredb) to
-learn more.
+This package is based on GlareDB v0.9.5.
+
+Check out the [GlareDB repo](https://github.com/GlareDB/glaredb) for
+details.
 
 ## Installation
 
-This package can be installed from
-[R-universe](https://eitsupi.r-universe.dev/glaredb). If available, a
-binary package will be installed.
+This package can be installed from R-multiverse. If available, a binary
+package will be installed.
 
 **Currently, Windows is not supported. Please use WSL2.**
 
 ``` r
 Sys.setenv(NOT_CRAN = "true")
-install.packages("glaredb", repos = c("https://eitsupi.r-universe.dev", options("repos")))
+install.packages("glaredb", repos = c("https://community.r-multiverse.org", options("repos")))
 ```
 
 ## Examples

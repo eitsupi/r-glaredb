@@ -47,7 +47,7 @@ jobs:
         with:
           use-public-rspm: true
           Ncpus: "2"
-          extra-repositories: https://rpolars.r-universe.dev # For the polars package
+          extra-repositories: https://community.r-multiverse.org # For the polars package
 
       - uses: arduino/setup-protoc@v3
         with:

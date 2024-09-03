@@ -1,4 +1,4 @@
 url	sha256sum
-https://github.com/eitsupi/r-glaredb/releases/download/lib-v0.0.2/libr_glaredb-0.0.2-aarch64-apple-darwin.tar.gz	6e21f2b4e9b3d82287fb8a9b7aa5fa7b22e12457f7c05e5095f17f6af59ef89e
-https://github.com/eitsupi/r-glaredb/releases/download/lib-v0.0.2/libr_glaredb-0.0.2-x86_64-apple-darwin.tar.gz	28560c23cc7a61b7259197d756722b09c96630470cd6ef105bb168c527b7678d
-https://github.com/eitsupi/r-glaredb/releases/download/lib-v0.0.2/libr_glaredb-0.0.2-x86_64-unknown-linux-gnu.tar.gz	ea47bba3ff68645df425727b5d8001b39dd1c8470a31cd4be5fbec24ba8ee68c
+https://github.com/eitsupi/r-glaredb/releases/download/lib-v0.0.3/libr_glaredb-0.0.3-aarch64-apple-darwin.tar.gz	5930e2d20d9539c02fa46ba981afecb3587331fbb939d3474976f9bb4ff0cf95
+https://github.com/eitsupi/r-glaredb/releases/download/lib-v0.0.3/libr_glaredb-0.0.3-x86_64-apple-darwin.tar.gz	8bc4c122266fa921969631a41c6de295563bb2cda1af9bd1639213833ba67374
+https://github.com/eitsupi/r-glaredb/releases/download/lib-v0.0.3/libr_glaredb-0.0.3-x86_64-unknown-linux-gnu.tar.gz	122823b2429d054e463f6abc440db2d65a4276f12cf77a004e79d90fe8bab3ca
