@@ -69,13 +69,14 @@ If <code>NULL</code>, the default in-memory database is used.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>GlareDB execusion output.
+    <p>A GlareDB execusion output (Query plan).
 For <code>glaredb_execute()</code>, the value is returned invisibly.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">glaredb_sql</span><span class="op">(</span><span class="st">"SELECT 'hello from R' as hello"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># You can materialize the query result by `as_glaredb_table()` etc.</span></span></span>
+<span class="r-in"><span><span class="fu">glaredb_sql</span><span class="op">(</span><span class="st">"SELECT 'hello from R' as hello"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="as_glaredb_table.html">as_glaredb_table</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ┌──────────────┐</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> │ hello        │</span>
@@ -89,18 +90,15 @@ For <code>glaredb_execute()</code>, the value is returned invisibly.</p>
 <span class="r-in"><span><span class="st">  {a=5, b=false},</span></span></span>
 <span class="r-in"><span><span class="st">  {a=6, b=true},</span></span></span>
 <span class="r-in"><span><span class="st">]"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="as_glaredb_table.html">as_glaredb_table</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ┌───────┬─────────┐</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> │     a │ b       │</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> │    ── │ ──      │</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> │ Int64 │ Boolean │</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ╞═══════╪═════════╡</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> │     5 │ false   │</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> │     6 │ true    │</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> └───────┴─────────┘</span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   a     b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 5 FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 6  TRUE</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># `glaredb_execute()` is useful for manipulating the database</span></span></span>
 <span class="r-in"><span><span class="fu">glaredb_execute</span><span class="op">(</span><span class="st">"CREATE TABLE my_table (a int)"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">glaredb_execute</span><span class="op">(</span><span class="st">"INSERT INTO my_table VALUES (1), (2)"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">glaredb_sql</span><span class="op">(</span><span class="st">"SELECT * FROM my_table"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="as_glaredb_table.html">as_glaredb_table</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ┌───────┐</span>

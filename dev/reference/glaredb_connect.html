@@ -91,7 +91,11 @@ a cloud URL or <code>NULL</code>. If <code>NULL</code>, a in-memory database is 
 
 
 <dt id="arg-env">env<a class="anchor" aria-label="anchor" href="#arg-env"></a></dt>
-<dd><p>TODO</p></dd>
+<dd><p>The connected environment, an environment class or <code>NULL</code>
+(means the <a href="https://rdrr.io/r/base/environment.html" class="external-link">global env</a>).
+GlareDB can resister some class of R objects inside the environment automatically,
+so you can access the objects inside this environment by the object name in the query.
+The default, the caller environment is used.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -101,20 +105,40 @@ a cloud URL or <code>NULL</code>. If <code>NULL</code>, a in-memory database is 
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">glaredb_connect</span><span class="op">(</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create a connection of in-memory database</span></span></span>
+<span class="r-in"><span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">glaredb_connect</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The print result shows the connected environment</span></span></span>
 <span class="r-in"><span><span class="va">con</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GlareDB connection</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Connected to &lt;environment: 0x558f4a949968&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Connected to &lt;environment: 0x5596cbe41c48&gt;</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="glaredb_execute.html">glaredb_sql</a></span><span class="op">(</span><span class="st">"SELECT 'hello from R' as hello"</span>, <span class="va">con</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span><span class="co"># The connected environment can be accessed by `$.env`</span></span></span>
+<span class="r-in"><span><span class="va">con</span><span class="op">$</span><span class="va">.env</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5596cbe41c48&gt;</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Create a table to the database and insert data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="glaredb_execute.html">glaredb_execute</a></span><span class="op">(</span><span class="st">"CREATE TABLE my_table (a int)"</span>, <span class="va">con</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="glaredb_execute.html">glaredb_execute</a></span><span class="op">(</span><span class="st">"INSERT INTO my_table VALUES (1), (2)"</span>, <span class="va">con</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Query the data and assign the result to a variable</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="glaredb_execute.html">glaredb_sql</a></span><span class="op">(</span><span class="st">"SELECT * FROM my_table"</span>, <span class="va">con</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Since the result `res` exists in the connected environment,</span></span></span>
+<span class="r-in"><span><span class="co"># it can be resolved by the object name in the query</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/exists.html" class="external-link">exists</a></span><span class="op">(</span><span class="st">"res"</span>, envir <span class="op">=</span> <span class="va">con</span><span class="op">$</span><span class="va">.env</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="glaredb_execute.html">glaredb_sql</a></span><span class="op">(</span><span class="st">"SELECT * FROM res"</span>, <span class="va">con</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="as_glaredb_table.html">as_glaredb_table</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ┌──────────────┐</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> │ hello        │</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> │ ──           │</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> │ Utf8         │</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ╞══════════════╡</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> │ hello from R │</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> └──────────────┘</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ┌───────┐</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │     a │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │    ── │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │ Int32 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ╞═══════╡</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │     1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │     2 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └───────┘</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
