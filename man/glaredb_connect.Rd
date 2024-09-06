@@ -32,7 +32,11 @@ a cloud URL or \code{NULL}. If \code{NULL}, a in-memory database is used.}
 
 \item{storage_options}{Named character vector of storage options or \code{NULL} (default).}
 
-\item{env}{TODO}
+\item{env}{The connected environment, an \link[=environment-class]{environment class} or \code{NULL}
+(means the \link[=.GlobalEnv]{global env}).
+GlareDB can resister some class of R objects inside the environment automatically,
+so you can access the objects inside this environment by the object name in the query.
+The default, the caller environment is used.}
 }
 \value{
 GlareDB connection object
@@ -41,9 +45,26 @@ GlareDB connection object
 Connect to a GlareDB database
 }
 \examples{
+# Create a connection of in-memory database
 con <- glaredb_connect()
+
+# The print result shows the connected environment
 con
 
-glaredb_sql("SELECT 'hello from R' as hello", con) |>
+# The connected environment can be accessed by `$.env`
+con$.env
+
+# Create a table to the database and insert data
+glaredb_execute("CREATE TABLE my_table (a int)", con)
+glaredb_execute("INSERT INTO my_table VALUES (1), (2)", con)
+
+# Query the data and assign the result to a variable
+res <- glaredb_sql("SELECT * FROM my_table", con)
+
+# Since the result `res` exists in the connected environment,
+# it can be resolved by the object name in the query
+exists("res", envir = con$.env)
+
+glaredb_sql("SELECT * FROM res", con) |>
   as_glaredb_table()
 }

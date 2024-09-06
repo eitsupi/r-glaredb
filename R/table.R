@@ -6,8 +6,11 @@ print.RGlareDbTable <- function(x, ...) {
 
 #' Create a GlareDB table
 #'
-#' A class that has a struct similar to [arrow::Table] innerly and
-#' can be converted to other classes via [nanoarrow::as_nanoarrow_array_stream()].
+#' GlareDB table is a class that has a struct similar to [arrow::Table] innerly and
+#' can be converted from/to other classes via [nanoarrow::as_nanoarrow_array_stream()].
+#'
+#' The default method of [as_glaredb_table()] calls [nanoarrow::as_nanoarrow_array_stream()]
+#' internally, and all arguments are passed to it.
 #' @export
 #' @aliases RGlareDbTable
 #' @inheritParams nanoarrow::as_nanoarrow_array_stream
@@ -32,6 +35,10 @@ print.RGlareDbTable <- function(x, ...) {
 #' # and convert the result to a GlareDB table
 #' glaredb_sql("SELECT * FROM dat", con) |>
 #'   as_glaredb_table()
+#'
+#' # Convert the GlareDB table to an R data frame
+#' dat |>
+#'   as.data.frame()
 #'
 #' # Convert the GlareDB table to an arrow Table
 #' if (requireNamespace("arrow", quietly = TRUE)) {
