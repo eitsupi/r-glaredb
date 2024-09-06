@@ -28,8 +28,12 @@ type. Defaults to \code{\link[nanoarrow:infer_nanoarrow_schema]{infer_nanoarrow_
 A \link[=RGlareDbTable]{GlareDB table}.
 }
 \description{
-A class that has a struct similar to \link[arrow:Table-class]{arrow::Table} innerly and
-can be converted to other classes via \code{\link[nanoarrow:as_nanoarrow_array_stream]{nanoarrow::as_nanoarrow_array_stream()}}.
+GlareDB table is a class that has a struct similar to \link[arrow:Table-class]{arrow::Table} innerly and
+can be converted from/to other classes via \code{\link[nanoarrow:as_nanoarrow_array_stream]{nanoarrow::as_nanoarrow_array_stream()}}.
+}
+\details{
+The default method of \code{\link[=as_glaredb_table]{as_glaredb_table()}} calls \code{\link[nanoarrow:as_nanoarrow_array_stream]{nanoarrow::as_nanoarrow_array_stream()}}
+internally, and all arguments are passed to it.
 }
 \examples{
 con <- glaredb_connect()
@@ -49,6 +53,10 @@ dat <- data.frame(a = 1:3, b = letters[1:3]) |>
 # and convert the result to a GlareDB table
 glaredb_sql("SELECT * FROM dat", con) |>
   as_glaredb_table()
+
+# Convert the GlareDB table to an R data frame
+dat |>
+  as.data.frame()
 
 # Convert the GlareDB table to an arrow Table
 if (requireNamespace("arrow", quietly = TRUE)) {
