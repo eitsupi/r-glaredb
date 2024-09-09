@@ -11,6 +11,7 @@ R bindings for 'GlareDB', an analytical database based on 'Apache Arrow' and 'Ap
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://eitsupi.github.io/r-glaredb/}
   \item \url{https://github.com/eitsupi/r-glaredb}
   \item Report bugs at \url{https://github.com/eitsupi/r-glaredb/issues}
 }

@@ -27,7 +27,7 @@ package will be installed.
 
 ``` r
 Sys.setenv(NOT_CRAN = "true")
-install.packages("glaredb", repos = c("https://community.r-multiverse.org", options("repos")))
+install.packages("glaredb", repos = "https://community.r-multiverse.org")
 ```
 
 ## Examples
