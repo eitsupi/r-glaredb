@@ -1,5 +1,9 @@
 # glaredb (development version)
 
+## Bug fixes
+
+- Fix to report rustc version even if installing with pre-built binaries. (#71)
+
 # glaredb 0.0.3
 
 - Based on glaredb 0.9.5. (#56, thanks @tychoish)
