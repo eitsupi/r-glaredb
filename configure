@@ -68,6 +68,8 @@ check_bin_lib() {
     echo ""
     echo "---------------------- [LIBRARY BINARY FOUND] ----------------------"
     echo "The library was found at <${LIBR_GLAREDB_PATH}>. No need to build it."
+    echo ""
+    echo "Note: rustc version: $(rustc -V || echo 'Not found')"
     echo "--------------------------------------------------------------------"
     echo ""
     sed -e "s|@TARGET@||" src/Makevars.in >src/Makevars
