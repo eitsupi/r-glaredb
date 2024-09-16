@@ -2,7 +2,7 @@
 
 ## Bug fixes
 
-- Fix to report rustc version even if installing with pre-built binaries. (#71)
+- Fix to report rustc version even if installing with pre-built binaries. (#71, #72)
 
 # glaredb 0.0.3
 
