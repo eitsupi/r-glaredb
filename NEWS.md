@@ -3,6 +3,7 @@
 ## Bug fixes
 
 - Fix to report rustc version even if installing with pre-built binaries. (#71, #72)
+- Set `OS_type: unix` in the DESCRIPTION file, because the package is not installable on Windows for now. (#78)
 
 # glaredb 0.0.3
 
