@@ -1,4 +1,4 @@
-# glaredb (development version)
+# glaredb 0.0.4
 
 ## Bug fixes
 
