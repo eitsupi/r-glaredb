@@ -1,9 +1,9 @@
 Package: glaredb
 Title: R Bindings for 'GlareDB'
-Version: 0.0.3.9000
+Version: 0.0.4.9000
 Authors@R:
     person("Tatsuya", "Shima", , "ts1s1andn@gmail.com", role = c("aut", "cre"))
-Description:R bindings for 'GlareDB', an analytical database based on
+Description: R bindings for 'GlareDB', an analytical database based on
     'Apache Arrow' and 'Apache DataFusion' that can connect to various
     data sources and execute queries.
 License: AGPL-3
@@ -21,9 +21,9 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Config/glaredb/LibVersion: 0.0.3
-Config/Needs/dev:RcppTOML, devtools, desc, dplyr, fs, gert, glue, lintr,
+Config/Needs/dev: RcppTOML, devtools, desc, dplyr, fs, gert, glue, lintr,
     readr, styler, stringr
-Config/Needs/website:pkgdown
+Config/Needs/website: pkgdown
 Config/testthat/edition: 3
 Encoding: UTF-8
 OS_type: unix
