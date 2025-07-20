@@ -23,18 +23,23 @@ NULL
   }
 }
 
-#' @rdname glaredb_execute
+# Prohibit modifying environments
+
 #' @export
-`glaredb_sql` <- function(`query`, `connection` = NULL) {
-  `connection` <- .savvy_extract_ptr(`connection`, "RGlareDbConnection")
-  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_glaredb_sql__impl, `query`, `connection`))
+`$<-.savvy_glaredb__sealed` <- function(x, name, value) {
+  class <- gsub("__bundle$", "", class(x)[1])
+  stop(class, " cannot be modified", call. = FALSE)
 }
 
-#' @rdname glaredb_execute
 #' @export
-`glaredb_prql` <- function(`query`, `connection` = NULL) {
-  `connection` <- .savvy_extract_ptr(`connection`, "RGlareDbConnection")
-  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_glaredb_prql__impl, `query`, `connection`))
+`[[<-.savvy_glaredb__sealed` <- function(x, i, value) {
+  class <- gsub("__bundle$", "", class(x)[1])
+  stop(class, " cannot be modified", call. = FALSE)
+}
+
+
+`connect` <- function(`cloud_addr`, `disable_tls`, `env`, `data_dir_or_cloud_url` = NULL, `spill_path` = NULL, `location` = NULL, `storage_options` = NULL) {
+  .savvy_wrap_RGlareDbConnection(.Call(savvy_connect__impl, `cloud_addr`, `disable_tls`, `env`, `data_dir_or_cloud_url`, `spill_path`, `location`, `storage_options`))
 }
 
 
@@ -43,9 +48,20 @@ NULL
   .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_execute__impl, `query`, `connection`))
 }
 
+#' @rdname glaredb_execute
+#' @export
+#' @order 3
+`glaredb_prql` <- function(`query`, `connection` = NULL) {
+  `connection` <- .savvy_extract_ptr(`connection`, "RGlareDbConnection")
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_glaredb_prql__impl, `query`, `connection`))
+}
 
-`connect` <- function(`cloud_addr`, `disable_tls`, `env`, `data_dir_or_cloud_url` = NULL, `spill_path` = NULL, `location` = NULL, `storage_options` = NULL) {
-  .savvy_wrap_RGlareDbConnection(.Call(savvy_connect__impl, `cloud_addr`, `disable_tls`, `env`, `data_dir_or_cloud_url`, `spill_path`, `location`, `storage_options`))
+#' @rdname glaredb_execute
+#' @export
+#' @order 2
+`glaredb_sql` <- function(`query`, `connection` = NULL) {
+  `connection` <- .savvy_extract_ptr(`connection`, "RGlareDbConnection")
+  .savvy_wrap_RGlareDbExecutionOutput(.Call(savvy_glaredb_sql__impl, `query`, `connection`))
 }
 
 ### wrapper functions for RGlareDbConnection
@@ -56,42 +72,24 @@ NULL
   e$.ptr <- ptr
 
 
-  class(e) <- "RGlareDbConnection"
+  class(e) <- c("RGlareDbConnection", "savvy_glaredb__sealed")
   e
 }
-
-#' @export
-`$<-.RGlareDbConnection` <- function(x, name, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
-
-#' @export
-`[[<-.RGlareDbConnection` <- function(x, i, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
 
 
 
 `RGlareDbConnection` <- new.env(parent = emptyenv())
 
-#' @export
-`$<-.RGlareDbConnection` <- function(x, name, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
-
-#' @export
-`[[<-.RGlareDbConnection` <- function(x, i, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
-
 ### associated functions for RGlareDbConnection
 
 
 
-class(`RGlareDbConnection`) <- "RGlareDbConnection__bundle"
+class(`RGlareDbConnection`) <- c("RGlareDbConnection__bundle", "savvy_glaredb__sealed")
 
 #' @export
 `print.RGlareDbConnection__bundle` <- function(x, ...) {
-  cat('RGlareDbConnection')
+  cat('RGlareDbConnection\n')
 }
-
-#' @export
-`$<-.RGlareDbConnection__bundle` <- function(x, name, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
-
-#' @export
-`[[<-.RGlareDbConnection__bundle` <- function(x, i, value) stop("RGlareDbConnection cannot be modified", call. = FALSE)
 
 ### wrapper functions for RGlareDbExecutionOutput
 
@@ -113,50 +111,26 @@ class(`RGlareDbConnection`) <- "RGlareDbConnection__bundle"
   e$`print` <- `RGlareDbExecutionOutput_print`(ptr)
   e$`to_table` <- `RGlareDbExecutionOutput_to_table`(ptr)
 
-  class(e) <- "RGlareDbExecutionOutput"
+  class(e) <- c("RGlareDbExecutionOutput", "savvy_glaredb__sealed")
   e
 }
-
-#' @export
-`$<-.RGlareDbExecutionOutput` <- function(x, name, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
-
-#' @export
-`[[<-.RGlareDbExecutionOutput` <- function(x, i, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
 
 
 
 `RGlareDbExecutionOutput` <- new.env(parent = emptyenv())
 
-#' @export
-`$<-.RGlareDbExecutionOutput` <- function(x, name, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
-
-#' @export
-`[[<-.RGlareDbExecutionOutput` <- function(x, i, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
-
 ### associated functions for RGlareDbExecutionOutput
 
 
 
-class(`RGlareDbExecutionOutput`) <- "RGlareDbExecutionOutput__bundle"
+class(`RGlareDbExecutionOutput`) <- c("RGlareDbExecutionOutput__bundle", "savvy_glaredb__sealed")
 
 #' @export
 `print.RGlareDbExecutionOutput__bundle` <- function(x, ...) {
-  cat('RGlareDbExecutionOutput')
+  cat('RGlareDbExecutionOutput\n')
 }
-
-#' @export
-`$<-.RGlareDbExecutionOutput__bundle` <- function(x, name, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
-
-#' @export
-`[[<-.RGlareDbExecutionOutput__bundle` <- function(x, i, value) stop("RGlareDbExecutionOutput cannot be modified", call. = FALSE)
 
 ### wrapper functions for RGlareDbTable
-
-`RGlareDbTable_print` <- function(self) {
-  function() {
-    invisible(.Call(savvy_RGlareDbTable_print__impl, `self`))
-  }
-}
 
 `RGlareDbTable_export_stream` <- function(self) {
   function(`stream_ptr`) {
@@ -164,31 +138,25 @@ class(`RGlareDbExecutionOutput`) <- "RGlareDbExecutionOutput__bundle"
   }
 }
 
+`RGlareDbTable_print` <- function(self) {
+  function() {
+    invisible(.Call(savvy_RGlareDbTable_print__impl, `self`))
+  }
+}
+
 `.savvy_wrap_RGlareDbTable` <- function(ptr) {
   e <- new.env(parent = emptyenv())
   e$.ptr <- ptr
-  e$`print` <- `RGlareDbTable_print`(ptr)
   e$`export_stream` <- `RGlareDbTable_export_stream`(ptr)
+  e$`print` <- `RGlareDbTable_print`(ptr)
 
-  class(e) <- "RGlareDbTable"
+  class(e) <- c("RGlareDbTable", "savvy_glaredb__sealed")
   e
 }
-
-#' @export
-`$<-.RGlareDbTable` <- function(x, name, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
-
-#' @export
-`[[<-.RGlareDbTable` <- function(x, i, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
 
 
 
 `RGlareDbTable` <- new.env(parent = emptyenv())
-
-#' @export
-`$<-.RGlareDbTable` <- function(x, name, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
-
-#' @export
-`[[<-.RGlareDbTable` <- function(x, i, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
 
 ### associated functions for RGlareDbTable
 
@@ -197,16 +165,10 @@ class(`RGlareDbExecutionOutput`) <- "RGlareDbExecutionOutput__bundle"
 }
 
 
-class(`RGlareDbTable`) <- "RGlareDbTable__bundle"
+class(`RGlareDbTable`) <- c("RGlareDbTable__bundle", "savvy_glaredb__sealed")
 
 #' @export
 `print.RGlareDbTable__bundle` <- function(x, ...) {
-  cat('RGlareDbTable')
+  cat('RGlareDbTable\n')
 }
-
-#' @export
-`$<-.RGlareDbTable__bundle` <- function(x, name, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
-
-#' @export
-`[[<-.RGlareDbTable__bundle` <- function(x, i, value) stop("RGlareDbTable cannot be modified", call. = FALSE)
 

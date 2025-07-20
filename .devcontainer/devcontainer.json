@@ -4,7 +4,7 @@
 		"ghcr.io/devcontainers/features/rust:1": {
 			"version": "latest"
 		},
-		"ghcr.io/devcontainers-contrib/features/protoc:1": {},
+		"ghcr.io/devcontainers-extra/features/protoc:1": {},
 		"ghcr.io/rocker-org/devcontainer-features/r-dependent-packages": {
 			"when": "updateContent",
 			"additionalRepositories": "multiverse = 'https://community.r-multiverse.org'",

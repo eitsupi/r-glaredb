@@ -20,7 +20,7 @@ Suggests:
     rlang,
     rmarkdown,
     testthat (>= 3.0.0)
-Config/glaredb/LibVersion: 0.0.3
+Config/glaredb/LibVersion: 0.0.4
 Config/Needs/dev: RcppTOML, devtools, desc, dplyr, fs, gert, glue, lintr,
     readr, styler, stringr
 Config/Needs/website: pkgdown
