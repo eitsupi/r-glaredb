@@ -121,6 +121,7 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         env:
           LIBR_GLAREDB_BUILD: "false"
+          NOT_CRAN: "false"
         with:
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
 
