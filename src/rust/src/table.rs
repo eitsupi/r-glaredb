@@ -21,8 +21,7 @@ impl RGlareDbTable {
         let schema = &self.schema;
         let batches = &self.batches;
 
-        let disp = pretty_format_batches(&schema, &batches, Some(term_width()), None)
-            .map_err(|e| e.to_string())?;
+        let disp = pretty_format_batches(&schema, &batches, Some(term_width()), None)?;
 
         savvy::r_println!("{disp}");
 
@@ -33,12 +32,10 @@ impl RGlareDbTable {
         let stream_reader = unsafe {
             let stream = savvy::ExternalPointerSexp::try_from(stream_ptr)?
                 .cast_mut_unchecked::<FFI_ArrowArrayStream>();
-            ArrowArrayStreamReader::from_raw(stream).map_err(|e| e.to_string())?
+            ArrowArrayStreamReader::from_raw(stream)?
         };
         let schema = stream_reader.schema();
-        let batches = stream_reader
-            .collect::<Result<Vec<RecordBatch>, ArrowError>>()
-            .map_err(|e| e.to_string())?;
+        let batches = stream_reader.collect::<Result<Vec<RecordBatch>, ArrowError>>()?;
 
         Ok(RGlareDbTable { schema, batches })
     }

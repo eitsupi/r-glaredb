@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
-use savvy::{savvy, EnvironmentSexp, StringSexp};
+use savvy::{savvy, savvy_err, EnvironmentSexp, StringSexp};
 
 use crate::connection::RGlareDbConnection;
 use crate::environment::REnvironmentReader;
@@ -24,7 +24,8 @@ pub fn connect(
     let location = location.map(|s| s.to_string());
     let storage_options = storage_options
         .map(StrageOptions::try_from)
-        .transpose()?
+        .transpose()
+        .map_err(|s| savvy_err!("{s}"))?
         .map(|s| s.options);
 
     Ok(runtime::block_on(async move {
