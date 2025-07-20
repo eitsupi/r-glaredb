@@ -78,7 +78,7 @@ impl EnvironmentReader for REnvironmentReader {
 
         if classes
             .iter()
-            .any(|&s| s == "RPolarsDataFrame" || s == "ArrowTabular")
+            .any(|&s| s == "RPolarsDataFrame" || s == "ArrowTabular" || s == "polars_data_frame")
         {
             let func = savvy::FunctionSexp::try_from(savvy::Sexp(
                 savvy::eval_parse_text(r#"utils::getFromNamespace("as_glaredb_table", "glaredb")"#)

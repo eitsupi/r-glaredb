@@ -64,6 +64,17 @@ as_glaredb_table.default <- function(x, ..., schema = NULL) {
 }
 
 
+# Utf8View type is not supported in this version of arrow-rs,
+# so using the compat level 0 is needed.
+#' @export
+as_glaredb_table.polars_object <- function(x, ..., schema = NULL) {
+  as_nanoarrow_array_stream(
+    x, ..., schema = schema, polars_compat_level = "oldest"
+  ) |>
+    as_glaredb_table()
+}
+
+
 #' @export
 as_glaredb_table.RGlareDbTable <- function(x, ...) {
   x

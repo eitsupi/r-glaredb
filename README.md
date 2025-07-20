@@ -33,7 +33,7 @@ install.packages("glaredb", repos = "https://community.r-multiverse.org")
 ## Examples
 
 Use GlareDB directly in R to query and analyzer a variety of data
-sources, including `arrow::Table` and `polars::RPolarsDataFrame`.
+sources, including `{arrow}` Table and `{polars}` DataFrame.
 
 ``` r
 library(glaredb)

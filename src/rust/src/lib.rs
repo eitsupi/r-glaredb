@@ -11,6 +11,7 @@ use savvy::savvy;
 
 /// @rdname glaredb_execute
 /// @export
+/// @order 2
 #[savvy]
 pub fn glaredb_sql(
     query: &str,
@@ -25,6 +26,7 @@ pub fn glaredb_sql(
 
 /// @rdname glaredb_execute
 /// @export
+/// @order 3
 #[savvy]
 pub fn glaredb_prql(
     query: &str,

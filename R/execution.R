@@ -32,6 +32,7 @@ print.RGlareDbExecutionOutput <- function(x, ...) {
 #' glaredb_sql("SELECT * FROM my_table") |>
 #'   as_glaredb_table()
 #' @export
+#' @order 1
 glaredb_execute <- function(query, connection = NULL) {
   execute(query, connection) |>
     invisible()
