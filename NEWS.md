@@ -1,8 +1,8 @@
-# glaredb (development version)
+# glaredb 0.0.5
 
 ## New features
 
-- Support `{polars}` 1.0.0.
+- Support `{polars}` 1.0.0. (#96)
 
 # glaredb 0.0.4
 
