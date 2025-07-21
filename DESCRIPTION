@@ -1,6 +1,6 @@
 Package: glaredb
 Title: R Bindings for 'GlareDB'
-Version: 0.0.5
+Version: 0.0.5.9000
 Authors@R:
     person("Tatsuya", "Shima", , "ts1s1andn@gmail.com", role = c("aut", "cre"))
 Description: R bindings for 'GlareDB', an analytical database based on
