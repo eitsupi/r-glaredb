@@ -70,7 +70,7 @@ jobs:
         with:
           tool-cache: true
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -153,7 +153,7 @@ jobs:
       LIB_SUMS_PATH: "tools/lib-sums.tsv"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Check for pre-built binary
         run: |
